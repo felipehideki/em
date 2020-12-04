@@ -4,7 +4,6 @@ close all;
 
 %% ATIVIDADE 1 a) MÉDIAS E VARIÂNCIAS
 load('semana2_prob1.mat');
-
 medialinha1 = mean(dados(1,:));
 medialinha2 = mean(dados(2,:));
 medialinha3 = mean(dados(3,:));
@@ -118,7 +117,7 @@ p_doente_casoPSApos = sensPSA*prior/p_PSApos;
 p_doente_casoDREpos = sensDRE*prior/p_DREpos;
 
 
-%% ATIVIDADE 2 c) TESTES MÚLTIPLOS
+%% ATIVIDADE 2 d) TESTES MÚLTIPLOS
 
 saudaveisPSAeDRE = saudaveisPSAouDRE = doentesPSAeDRE = doentesPSAouDRE = 0;
 for (i=1:totalPacientes)
@@ -160,7 +159,7 @@ p_PSAeDREpos = ((1-espePSAouDRE)*(1-prior)) + (sensPSAeDRE*prior);
 p_doente_casoPSAeDREpos = sensPSAeDRE*prior/p_PSAeDREpos;
 
 
-%% ATIVIDADE 2 d) ANÁLISE PARA TESTES NEGATIVOS
+%% ATIVIDADE 2 e) ANÁLISE PARA TESTES NEGATIVOS
 
 %% P(T=0) = P(T=0|D=0)*P(D=0) + P(T=0|D=1)*P(D=1)
 p_PSAneg = (espePSA*(1-prior)) + ((1-sensPSA)*prior);
