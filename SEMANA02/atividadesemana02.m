@@ -68,7 +68,7 @@ pmc = mvncdf([mCMAP mSNAP uCMAP uSNAP],[medialinha1 medialinha2 medialinha3 medi
 
 
 %% ATIVIDADE 2 a)b) SENSIBILIDADE E ESPECIFICIDADE
-load('/home/ikedihbuntu/Downloads/EngenhariaMedica/semana02/semana2_prob2.mat');
+load('semana2_prob2.mat');
 
 totalPacientes = size(dados,1);
 totalDoentes = sum(dados(:,3));
