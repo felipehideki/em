@@ -1,4 +1,4 @@
-## SEMANA 03
+%% SEMANA 03
 
 function [media,variancia,mobilidade,complex_estatistica,freq_central,largura_banda,freq_margem,pot_espect_norm] = principais_c(SINAL,FREQ_AMOSTRAGEM)
   qtd_trechos = size(SINAL,1);
@@ -6,13 +6,13 @@ function [media,variancia,mobilidade,complex_estatistica,freq_central,largura_ba
   fshift = (-tamanho_sinal/2:tamanho_sinal/2-1)*(FREQ_AMOSTRAGEM/tamanho_sinal);
     
   for (trecho=1:qtd_trechos)
-    ##  MÉDIA
+    %%  MÉDIA
     media(trecho) = mean(SINAL(trecho,:));
     
-    ##  VARIÂNCIA
+    %%  VARIÂNCIA
     variancia(trecho) = var(SINAL(trecho,:));
     
-    ##  MOBILIDADE ESTATÍSTICA
+    %%  MOBILIDADE ESTATÍSTICA
     dif1 = media_dif1 = var_dif1 = 0;
     for (i=1:tamanho_sinal-1)
       dif1 = SINAL(trecho,i+1)-SINAL(trecho,i);
@@ -21,7 +21,7 @@ function [media,variancia,mobilidade,complex_estatistica,freq_central,largura_ba
     endfor
     mobilidade(trecho) = var_dif1/variancia(trecho);
       
-    ##  COMPLEXIDADE ESTATÍSTICA
+    %%  COMPLEXIDADE ESTATÍSTICA
     dif2 = media_dif2 = var_dif2 = 0;
     for (i=1:tamanho_sinal-2)
       dif2 = SINAL(trecho,i+2)-(2*SINAL(trecho,i+1))+SINAL(trecho,i);
@@ -30,32 +30,32 @@ function [media,variancia,mobilidade,complex_estatistica,freq_central,largura_ba
     endfor
     complex_estatistica(trecho) = sqrt((var_dif2/var_dif1)-(var_dif1-variancia(trecho)));
     
-    ##  FREQUÊNCIA CENTRAL
+    %%  FREQUÊNCIA CENTRAL
     sigfft_shifted = fftshift(fft(SINAL(trecho,:)));
     potencia(trecho,:) = (abs(sigfft_shifted).^2)/tamanho_sinal;
     soma_pot = sum(potencia(trecho,1:1+tamanho_sinal/2));
-    ##plot(fshift,potencia);
-    ##xlim([0 FREQ_AMOSTRAGEM/2]);
+    %%plot(fshift,potencia);
+    %%xlim([0 FREQ_AMOSTRAGEM/2]);
     freq_central(trecho) = 0;
     for (i=1:tamanho_sinal/2)
-      freq_central(trecho) = freq_central(trecho) + (fshift(i)*(-1)*potencia(trecho,i)/soma_pot);  #fshift*(-1) pois começa da parte negativa do deslocamento
+      freq_central(trecho) = freq_central(trecho) + (fshift(i)*(-1)*potencia(trecho,i)/soma_pot);  %fshift*(-1) pois começa da parte negativa do deslocamento
     endfor
     
-    ##  LARGURA DE BANDA
+    %%  LARGURA DE BANDA
     ILB_prov = 0;
     fw = 0;
     delta1 = delta2 = teta1 = teta2 = alfa = beta = gama = 0;
     for (i=1:tamanho_sinal/2)
-      ILB_prov = ILB_prov + (((fshift(i)*(-1))-freq_central(trecho))^2)*potencia(trecho,i);  #fshift*(-1) pois começa da parte negativa do deslocamento
+      ILB_prov = ILB_prov + (((fshift(i)*(-1))-freq_central(trecho))^2)*potencia(trecho,i);  %fshift*(-1) pois começa da parte negativa do deslocamento
       
-      ##  FREQUÊNCIA DE MARGEM
+      %%  FREQUÊNCIA DE MARGEM
       if (fw<0.9)
         fw = fw + potencia(trecho,1501-i)/soma_pot;
         freq_margem(trecho) = fshift(1501-i)*(-1);
       endif
     
-      ##  POTÊNCIA ESPECTRAL NORMALIZADA EM BANDAS  
-      ##  d1(0.5~2.5Hz), d2(2.5~4 Hz), t1(4~6Hz), t2(6~8Hz), a(8~12Hz), b(12~20 Hz) e g(20~45Hz)
+      %%  POTÊNCIA ESPECTRAL NORMALIZADA EM BANDAS  
+      %%  d1(0.5~2.5Hz), d2(2.5~4 Hz), t1(4~6Hz), t2(6~8Hz), a(8~12Hz), b(12~20 Hz) e g(20~45Hz)
       if ((fshift(i)*(-1))>20 && (fshift(i)*(-1))<45)
         gama = gama + potencia(i);
       endif
