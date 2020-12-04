@@ -1,6 +1,7 @@
 %% SEMANA 02
 clear all;
 close all;
+
 %% ATIVIDADE 1 a) MÉDIAS E VARIÂNCIAS
 load('semana2_prob1.mat');
 
