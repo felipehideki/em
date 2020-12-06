@@ -21,6 +21,7 @@ function [media,variancia,mobilidade,complex_estatistica,freq_central,largura_ba
     endfor
     mobilidade(trecho) = var_dif1/variancia(trecho);
       
+    % ------------- CORRIGIR ----------------  
     %%  COMPLEXIDADE ESTATÍSTICA
     dif2 = media_dif2 = var_dif2 = 0;
     for (i=1:tamanho_sinal-2)
@@ -29,6 +30,7 @@ function [media,variancia,mobilidade,complex_estatistica,freq_central,largura_ba
       var_dif2 = var_dif2 + ((dif2-media_dif2)^2)/(tamanho_sinal-3);
     endfor
     complex_estatistica(trecho) = sqrt((var_dif2/var_dif1)-(var_dif1-variancia(trecho)));
+    % ------------- CORRIGIR ----------------
     
     %%  FREQUÊNCIA CENTRAL
     sigfft_shifted = fftshift(fft(SINAL(trecho,:)));
@@ -53,7 +55,8 @@ function [media,variancia,mobilidade,complex_estatistica,freq_central,largura_ba
         fw = fw + potencia(trecho,1501-i)/soma_pot;
         freq_margem(trecho) = fshift(1501-i)*(-1);
       endif
-    
+      
+    % ------------- CORRIGIR ----------------
       %%  POTÊNCIA ESPECTRAL NORMALIZADA EM BANDAS  
       %%  d1(0.5~2.5Hz), d2(2.5~4 Hz), t1(4~6Hz), t2(6~8Hz), a(8~12Hz), b(12~20 Hz) e g(20~45Hz)
       if ((fshift(i)*(-1))>20 && (fshift(i)*(-1))<45)
@@ -77,6 +80,7 @@ function [media,variancia,mobilidade,complex_estatistica,freq_central,largura_ba
       if ((fshift(i)*(-1))>0.5 && (fshift(i)*(-1))<2.5)
         delta1 = delta1 + potencia(i);
       endif
+   % ------------- CORRIGIR ----------------
     endfor
     pot_espect_norm(trecho,1) = delta1/soma_pot;
     pot_espect_norm(trecho,2) = delta2/soma_pot;
