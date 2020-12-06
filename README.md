@@ -1,4 +1,4 @@
-# me - Medical Engineering
+# em - Engenharia Médica
 
 Repositório para consulta de algoritmos utilizados em engenharia médica (linguagem OCTAVE).
 
