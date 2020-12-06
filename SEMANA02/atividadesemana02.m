@@ -63,6 +63,8 @@ dnc_uSNAP = normcdf(uSNAP,medialinha4,std(dados(4,:)));
 
 %% ATIVIDADE 1 e) MATRIZ DE COVARIÂNCIA E PROBABILIDADE MULTIVARIADA CUMULADA
 matcov = cov(dados');
+
+% -------------- CORRIGIR ----------------
 pmc = mvncdf([mCMAP mSNAP uCMAP uSNAP],[medialinha1 medialinha2 medialinha3 medialinha4],matcov);
 % -------------- CORRIGIR ----------------
 
