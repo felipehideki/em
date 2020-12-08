@@ -1,6 +1,6 @@
 # em - Engenharia Médica
 
-Repositório para consulta de algoritmos utilizados em engenharia médica (linguagem OCTAVE).
+Repositório para consulta de algoritmos utilizados em engenharia médica (linguagem OCTAVE/MATLAB).
 
 Em caso de dúvidas, envie uma mensagem aqui ou entre em contato via email/pessoalmente.
 
