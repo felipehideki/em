@@ -21,3 +21,11 @@ ske_norm_linear = semana4_normalizacao(ske_norm_linear);
 ske_norm_linear = [ske_norm_linear(1:5) ske_norm_linear(6:10)];
 figure 2;
 plot(med_norm_linear,ske_norm_linear,'.','markersize',25);
+
+
+% 3) TESTES ESTATÍSTICOS
+
+load('Semana4_exercicio2.mat');
+classe1 = [med(:,1)';ske(:,1)'];
+classe2 = [med(:,2)';ske(:,2)'];
+semana4_testeestatistico(classe1,classe2);
