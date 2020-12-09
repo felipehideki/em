@@ -13,7 +13,7 @@ function [media,variancia,mobilidade,complex_estatistica,freq_central,largura_ba
     variancia(trecho) = var(SINAL(trecho,:));
     
     %%  MOBILIDADE ESTATÍSTICA
-    dif1 = media_dif1 = var_dif1 = 0;
+    media_dif1 = var_dif1 = 0;
     for (i=1:tamanho_sinal-1)
       dif1 = SINAL(trecho,i+1)-SINAL(trecho,i);
       media_dif1 = media_dif1 + dif1/(tamanho_sinal-1);
@@ -23,13 +23,13 @@ function [media,variancia,mobilidade,complex_estatistica,freq_central,largura_ba
       
     % ------------- CORRIGIR ----------------  
     %%  COMPLEXIDADE ESTATÍSTICA
-    dif2 = media_dif2 = var_dif2 = 0;
+    media_dif2 = var_dif2 = 0;
     for (i=1:tamanho_sinal-2)
-      dif2 = SINAL(trecho,i+2)-(2*SINAL(trecho,i+1))+SINAL(trecho,i);
+      dif2 = (SINAL(trecho,i+2)-SINAL(trecho,i+1))-(SINAL(trecho,i+1)-SINAL(trecho,i));
       media_dif2 = media_dif2 + dif2/(tamanho_sinal-2);
       var_dif2 = var_dif2 + ((dif2-media_dif2)^2)/(tamanho_sinal-3);
     endfor
-    complex_estatistica(trecho) = sqrt((var_dif2/var_dif1)-(var_dif1-variancia(trecho)));
+    complex_estatistica(trecho) = sqrt((var_dif2/var_dif1)-(var_dif1/variancia(trecho)));
     % ------------- CORRIGIR ----------------
     
     %%  FREQUÊNCIA CENTRAL
