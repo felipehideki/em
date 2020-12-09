@@ -1,4 +1,4 @@
-%% SEMANA 03
+% % SEMANA 03
 
 function [media,variancia,mobilidade,complex_estatistica,freq_central,largura_banda,freq_margem,pot_espect_norm] = principais_c(SINAL,FREQ_AMOSTRAGEM)
   qtd_trechos = size(SINAL,1);
