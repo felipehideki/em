@@ -42,8 +42,8 @@ reg_logske = glmfit(vske,y,'binomial');   % regressão logística para ske
 pmed = glmval(reg_logmed,vmed,'logit');      % p para classificação med
 pske = glmval(reg_logske,vske,'logit');      % p para classificação ske
 
-[Xmed,Ymed,Tmed,AUCmed] = perfcurve(y,pmed,'true','Xvals','all');
-[Xske,Yske,Tmed,AUCske] = perfcurve(y,pske,'true');
+[Xmed,Ymed,~,AUCmed] = perfcurve(y,pmed,'true');
+[Xske,Yske,~,AUCske] = perfcurve(y,pske,'true');
 
 figure(1);
 plot(0:1,0:1,'black');
