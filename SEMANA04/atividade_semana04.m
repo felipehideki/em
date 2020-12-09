@@ -48,8 +48,8 @@ pske = glmval(reg_logske,vske,'logit');      % p para classificação ske
 figure(1);
 plot(0:1,0:1,'black');
 hold on;
-plot(Xmed,Ymed)
-xlabel('%FP(\alpha)'); ylabel('%VP(1-\beta)')
+plot(Xmed,Ymed);
+xlabel('%FP(\alpha)'); ylabel('%VP(1-\beta)');
 title(['AUC = ', num2str(AUCmed,'%.3f')]);
 
 figure(2);
