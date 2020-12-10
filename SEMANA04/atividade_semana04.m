@@ -60,3 +60,38 @@ xlabel('%FP(\alpha)'); ylabel('%VP(1-\beta)');
 title(['AUC = ', num2str(AUCske,'%.3f')]);
 
 
+%% 5) PRÉ-PROCESSAMENTO, TESTE ESTATÍSTICO E ROC
+
+load('Semana3_eeg.mat');
+[media,variancia,mobilidade,complex_estatistica,freq_central,largura_banda,freq_margem,pot_espect_norm] = principais_c(SINAL,100);
+
+% ESTÁGIOS DO SINAL
+vigilia = find(ESTAGIOS==0);
+vigilia = [vigilia(1):vigilia(end)];
+estagio1 = find(ESTAGIOS==1);
+estagio1 = [estagio1(1):estagio1(end)];
+estagio2 = find(ESTAGIOS==2);
+estagio2 = [estagio2(1):estagio2(end)];
+estagio3 = find(ESTAGIOS==3);
+estagio3 = [estagio3(1):estagio3(end)];
+estagio4 = find(ESTAGIOS==4);
+estagio4 = [estagio4(1):estagio4(end)];
+rem = find(ESTAGIOS==5);
+rem = [rem(1):rem(end)];
+
+% d) AUC LARGURA DE BANDA (VIGÍLIA x REM)
+indice1 = vigilia;
+indice2 = rem;
+vcarac = [largura_banda(indice1)';largura_banda(indice2)'];
+y = (1:(numel(indice1)+numel(indice2)))'>indice1(end); % classe1 = 0, classe2 = 1
+reg_logmed = glmfit(vcarac,y,'binomial');   % regressão logística
+pmed = glmval(reg_logmed,vcarac,'logit');      % p
+
+[Xmed,Ymed,~,AUCmed] = perfcurve(y,pmed,'true');
+
+figure(1);
+plot(0:1,0:1,'black');
+hold on;
+plot(Xmed,Ymed);
+xlabel('%FP(\alpha)'); ylabel('%VP(1-\beta)');
+title(['AUC = ', num2str(AUCmed,'%.3f')]);
