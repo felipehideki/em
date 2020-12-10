@@ -87,11 +87,11 @@ y = (1:(numel(indice1)+numel(indice2)))'>indice1(end); % classe1 = 0, classe2 = 
 reg_log = glmfit(vcarac,y,'binomial');   % regressão logística
 p = glmval(reg_log,vcarac,'logit');      % p
 
-[Xmed,Ymed,~,AUCmed] = perfcurve(y,p,'true');
+[Xmed,Ymed,~,AUC] = perfcurve(y,p,'true');
 
 figure(1);
 plot(0:1,0:1,'black');
 hold on;
 plot(Xmed,Ymed);
 xlabel('%FP(\alpha)'); ylabel('%VP(1-\beta)');
-title(['AUC = ', num2str(AUCmed,'%.3f')]);
+title(['AUC = ', num2str(AUC,'%.3f')]);
