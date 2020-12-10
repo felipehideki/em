@@ -84,10 +84,10 @@ indice1 = vigilia;
 indice2 = rem;
 vcarac = [largura_banda(indice1)';largura_banda(indice2)'];
 y = (1:(numel(indice1)+numel(indice2)))'>indice1(end); % classe1 = 0, classe2 = 1
-reg_logmed = glmfit(vcarac,y,'binomial');   % regressão logística
-pmed = glmval(reg_logmed,vcarac,'logit');      % p
+reg_log = glmfit(vcarac,y,'binomial');   % regressão logística
+p = glmval(reg_log,vcarac,'logit');      % p
 
-[Xmed,Ymed,~,AUCmed] = perfcurve(y,pmed,'true');
+[Xmed,Ymed,~,AUCmed] = perfcurve(y,p,'true');
 
 figure(1);
 plot(0:1,0:1,'black');
