@@ -1,4 +1,5 @@
-% TRANSFORMADA DE KARHUNEN-LOÈVE
+%   SEMANA 05
+%   TRANSFORMADA DE KARHUNEN-LOÈVE
 
 function [autovalores, matrizLL, matrizmN, erro] = karloeve(matrizLN,m)
     % MATRIZ DE COVARIÂNCIA
