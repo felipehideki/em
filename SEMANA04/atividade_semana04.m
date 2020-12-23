@@ -34,6 +34,45 @@ semana4_testeestatistico(classe1,classe2);
 %% 4) CARACTERÍSTICA DE OPERAÇÃO DO RECEPTOR (ROC)
 
 load('Semana4_exercicio2.mat');
+
+% % ROC em med
+% vmed = [med(:,1);med(:,2)];
+% vmed = sort(vmed);
+% for i=1:10
+%     FALSO(i) = 0;
+%     VERDADEIRO(i) = 0;
+% end
+% for i=1:numel(vmed)
+%     achado = find(med==vmed(i));
+%     if (achado>5)
+%         FALSO(i) = 1;
+%     else
+%         VERDADEIRO(i) = 1;
+%     end
+%     FP(i) = sum(FALSO)/5;
+%     VP(i) = sum(VERDADEIRO)/5;
+% end
+% plot(FP,VP);
+% 
+% % ROC em ske
+% vske = [ske(:,1);ske(:,2)];
+% vske = sort(vske);
+% for i=1:10
+%     FALSO(i) = 0;
+%     VERDADEIRO(i) = 0;
+% end
+% for i=1:numel(vske)
+%     achado = find(ske==vske(i));
+%     if (achado>5)
+%         FALSO(i) = 1;
+%     else
+%         VERDADEIRO(i) = 1;
+%     end
+%     FP(i) = sum(FALSO)/5;
+%     VP(i) = sum(VERDADEIRO)/5;
+% end
+% plot(VP,FP);
+
 vmed = [med(:,1);med(:,2)];         % vetor de dados característica med
 vske = [ske(:,1);ske(:,2)];         % vetor de dados característica ske
 y = (1:10)'>5;                      % classe1 = 0, classe2 = 1
