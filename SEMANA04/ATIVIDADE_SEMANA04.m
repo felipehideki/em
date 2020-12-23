@@ -35,77 +35,79 @@ semana4_testeestatistico(classe1,classe2);
 
 load('Semana4_exercicio2.mat');
 
-% % ------------------- CORRIGIR ---------------------------
-% % ROC em med
-% vmed = [med(:,1);med(:,2)];
-% vmed = sort(vmed);
-% for i=1:10
-%     FALSO(i) = 0;
-%     VERDADEIRO(i) = 0;
-% end
-% for i=1:numel(vmed)
-%     achado = find(med==vmed(i));
-%     if (achado>5)
-%         FALSO(i) = 1;
-%     else
-%         VERDADEIRO(i) = 1;
-%     end
-%     FP(i) = sum(FALSO)/5;
-%     VP(i) = sum(VERDADEIRO)/5;
-% end
-% figure(1);
-% plot(0:1,0:1,'black');
-% hold on;
-% plot(FP,VP);
-% xlabel('%FP(\alpha)'); ylabel('%VP(1-\beta)');
-% 
-% % ROC em ske
-% vske = [ske(:,1);ske(:,2)];
-% vske = sort(vske);
-% for i=1:10
-%     FALSO(i) = 0;
-%     VERDADEIRO(i) = 0;
-% end
-% for i=1:numel(vske)
-%     achado = find(ske==vske(i));
-%     if (achado>5)
-%         FALSO(i) = 1;
-%     else
-%         VERDADEIRO(i) = 1;
-%     end
-%     FP(i) = sum(FALSO)/5;
-%     VP(i) = sum(VERDADEIRO)/5;
-% end
-% figure(2);
-% plot(0:1,0:1,'black');
-% hold on;
-% plot(VP,FP);
-% xlabel('%FP(\alpha)'); ylabel('%VP(1-\beta)');
-
-vmed = [med(:,1);med(:,2)];         % vetor de dados característica med
-vske = [ske(:,1);ske(:,2)];         % vetor de dados característica ske
-y = (1:10)'>5;                      % classe1 = 0, classe2 = 1
-reg_logmed = glmfit(vmed,y,'binomial');   % regressão logística para med
-reg_logske = glmfit(vske,y,'binomial');   % regressão logística para ske
-pmed = glmval(reg_logmed,vmed,'logit');      % p para classificação med
-pske = glmval(reg_logske,vske,'logit');      % p para classificação ske
-
-[Xmed,Ymed,~,AUCmed] = perfcurve(y,pmed,'true');
-[Xske,Yske,~,AUCske] = perfcurve(y,pske,'true');
-
+% ROC em med
+vmed = [med(:,1);med(:,2)];
+vmed = sort(vmed);
+for i=1:10
+    FALSO(i) = 0;
+    VERDADEIRO(i) = 0;
+end
+for i=1:numel(vmed)
+    achado = find(med==vmed(i));
+    if achado>5 % achado>5 é a segunda classe (coluna) de med
+        FALSO(i) = 1;
+    else
+        VERDADEIRO(i) = 1;
+    end
+    FP(i) = sum(FALSO)/5;
+    VP(i) = sum(VERDADEIRO)/5;
+end
 figure(1);
 plot(0:1,0:1,'black');
 hold on;
-plot(Xmed,Ymed);
+plot(FP,VP);
 xlabel('%FP(\alpha)'); ylabel('%VP(1-\beta)');
-title(['AUC = ', num2str(AUCmed,'%.3f')]);
 
+% ROC em ske
+vske = [ske(:,1);ske(:,2)];
+vske = sort(vske);
+for i=1:10
+    FALSO(i) = 0;
+    VERDADEIRO(i) = 0;
+end
+for i=1:numel(vske)
+    achado = find(ske==vske(i));
+    if (achado>5)  % achado>5 é a segunda classe (coluna) de ske
+        FALSO(i) = 1;
+    else
+        VERDADEIRO(i) = 1;
+    end
+    FP(i) = sum(FALSO)/5;
+    VP(i) = sum(VERDADEIRO)/5;
+end
 figure(2);
 plot(0:1,0:1,'black');
 hold on;
-plot(Xske,Yske);
+plot(FP,VP);
 xlabel('%FP(\alpha)'); ylabel('%VP(1-\beta)');
-title(['AUC = ', num2str(AUCske,'%.3f')]);
+
+
+% % CALCULANDO ROC POR REGRESSÃO LOGÍSTICA
+
+% vmed = [med(:,1);med(:,2)];         % vetor de dados característica med
+% vske = [ske(:,1);ske(:,2)];         % vetor de dados característica ske
+% y = (1:10)'>5;                      % classe1 = 0, classe2 = 1
+% reg_logmed = glmfit(vmed,y,'binomial');   % regressão logística para med
+% reg_logske = glmfit(vske,y,'binomial');   % regressão logística para ske
+% pmed = glmval(reg_logmed,vmed,'logit');      % p para classificação med
+% pske = glmval(reg_logske,vske,'logit');      % p para classificação ske
+% 
+% [Xmed,Ymed,~,AUCmed] = perfcurve(y,pmed,'true');
+% [Xske,Yske,~,AUCske] = perfcurve(y,pske,'true');
+% 
+% figure(1);
+% plot(0:1,0:1,'black');
+% hold on;
+% plot(Xmed,Ymed);
+% xlabel('%FP(\alpha)'); ylabel('%VP(1-\beta)');
+% title(['AUC = ', num2str(AUCmed,'%.3f')]);
+% 
+% figure(2);
+% plot(0:1,0:1,'black');
+% hold on;
+% plot(Xske,Yske);
+% xlabel('%FP(\alpha)'); ylabel('%VP(1-\beta)');
+% title(['AUC = ', num2str(AUCske,'%.3f')]);
 
 
 %% 5) PRÉ-PROCESSAMENTO, TESTE ESTATÍSTICO E ROC
