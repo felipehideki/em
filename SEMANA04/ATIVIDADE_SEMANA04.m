@@ -154,28 +154,26 @@ title(['AUC = ', num2str(AUC,'%.3f')]);
 %% 6) CRITÉRIO ESCALAR DE FISHER (FDR)
 
 load('Semana4_exercicio6.mat');
-
 for caracteristica=1:4
     media_classe1(caracteristica) = mean(figadoadiposo(:,caracteristica));
     var_classe1(caracteristica) = var(figadoadiposo(:,caracteristica),1);
     media_classe2(caracteristica) = mean(figadocirrotico(:,caracteristica));
     var_classe2(caracteristica) = var(figadocirrotico(:,caracteristica),1);
     FDR(caracteristica) = ((media_classe1(caracteristica)-media_classe2(caracteristica))^2)/(var_classe1(caracteristica)+var_classe2(caracteristica));
+    
+    vcarac = [figadoadiposo(:,caracteristica);figadocirrotico(:,caracteristica)];
+    y = (1:(numel(figadoadiposo(:,caracteristica))+numel(figadocirrotico(:,caracteristica))))'>numel(figadoadiposo(:,caracteristica)); % classe1 = 0, classe2 = 1
+    reg_log = glmfit(vcarac,y,'binomial');   % regressão logística
+    p = glmval(reg_log,vcarac,'logit');      % p
+
+    [Xmed,Ymed,~,AUC] = perfcurve(y,p,'true');
+
+    figure(caracteristica);
+    plot(0:1,0:1,'black');
+    hold on;
+    plot(Xmed,Ymed);
+    xlabel('%FP(\alpha)'); ylabel('%VP(1-\beta)');
+    title(['AUC = ', num2str(AUC,'%.3f')]);
 end
-
-% % DEFINIR CARACTERÍSTICAS A SEREM COMPARADAS (DOIS A DOIS)
-vcarac = [figadoadiposo(:,1);figadocirrotico(:,1)];
-y = (1:(numel(figadoadiposo(:,1))+numel(figadocirrotico(:,1))))'>numel(figadoadiposo(:,1)); % classe1 = 0, classe2 = 1
-reg_log = glmfit(vcarac,y,'binomial');   % regressão logística
-p = glmval(reg_log,vcarac,'logit');      % p
-
-[Xmed,Ymed,~,AUC] = perfcurve(y,p,'true');
-
-figure(1);
-plot(0:1,0:1,'black');
-hold on;
-plot(Xmed,Ymed);
-xlabel('%FP(\alpha)'); ylabel('%VP(1-\beta)');
-title(['AUC = ', num2str(AUC,'%.3f')]);
 
 % % ------------------ REALIZAR SELEÇÃO ESCALAR --------------------------
