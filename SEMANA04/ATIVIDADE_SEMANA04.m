@@ -35,6 +35,7 @@ semana4_testeestatistico(classe1,classe2);
 
 load('Semana4_exercicio2.mat');
 
+% % ------------------- CORRIGIR ---------------------------
 % % ROC em med
 % vmed = [med(:,1);med(:,2)];
 % vmed = sort(vmed);
