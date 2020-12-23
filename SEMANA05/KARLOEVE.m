@@ -1,7 +1,7 @@
 %   SEMANA 05
 %   TRANSFORMADA DE KARHUNEN-LOÈVE
 
-function [autovalores, matrizLL, matrizmN, erro] = karloeve(matrizLN,m)
+function [autovalores, matrizLL, matrizmN, erro] = KARLOEVE(matrizLN,m)
     % MATRIZ DE COVARIÂNCIA
     matcov = cov(matrizLN');
     
