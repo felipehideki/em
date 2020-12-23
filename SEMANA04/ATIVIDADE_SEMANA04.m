@@ -53,7 +53,11 @@ load('Semana4_exercicio2.mat');
 %     FP(i) = sum(FALSO)/5;
 %     VP(i) = sum(VERDADEIRO)/5;
 % end
+% figure(1);
+% plot(0:1,0:1,'black');
+% hold on;
 % plot(FP,VP);
+% xlabel('%FP(\alpha)'); ylabel('%VP(1-\beta)');
 % 
 % % ROC em ske
 % vske = [ske(:,1);ske(:,2)];
@@ -72,7 +76,11 @@ load('Semana4_exercicio2.mat');
 %     FP(i) = sum(FALSO)/5;
 %     VP(i) = sum(VERDADEIRO)/5;
 % end
+% figure(2);
+% plot(0:1,0:1,'black');
+% hold on;
 % plot(VP,FP);
+% xlabel('%FP(\alpha)'); ylabel('%VP(1-\beta)');
 
 vmed = [med(:,1);med(:,2)];         % vetor de dados característica med
 vske = [ske(:,1);ske(:,2)];         % vetor de dados característica ske
