@@ -151,7 +151,7 @@ xlabel('%FP(\alpha)'); ylabel('%VP(1-\beta)');
 title(['AUC = ', num2str(AUC,'%.3f')]);
 
 
-%% 6) CRITÉRIO ESCALAR DE FISHER (FDR)
+%% 6) SELEÇÃO ESCALAR POR AUC E POR CRITÉRIO DE FISHER (FDR)
 
 load('Semana4_exercicio6.mat');
 for caracteristica=1:4
