@@ -168,12 +168,12 @@ for caracteristica=1:4
 
     [Xmed,Ymed,~,AUC(caracteristica)] = perfcurve(y,p,'true');
 
-    figure(caracteristica);
-    plot(0:1,0:1,'black');
-    hold on;
-    plot(Xmed,Ymed);
-    xlabel('%FP(\alpha)'); ylabel('%VP(1-\beta)');
-    title(['AUC = ', num2str(AUC(caracteristica),'%.3f')]);
+%     figure(caracteristica);
+%     plot(0:1,0:1,'black');
+%     hold on;
+%     plot(Xmed,Ymed);
+%     xlabel('%FP(\alpha)'); ylabel('%VP(1-\beta)');
+%     title(['AUC = ', num2str(AUC(caracteristica),'%.3f')]);
 end
 
 cara_padrao = [figadoadiposo;figadocirrotico];
