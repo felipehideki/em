@@ -42,15 +42,15 @@ for i=1:10
     FALSO(i) = 0;
     VERDADEIRO(i) = 0;
 end
-for i=1:numel(vmed)
+for i=numel(vmed):-1:1 % verificando da direita para esquerda
     achado = find(med==vmed(i));
-    if achado>5 % achado>5 é a segunda classe (coluna) de med
-        FALSO(i) = 1;
+    if achado<=5 % achado<=5 é a segunda classe (coluna) de med
+        FALSO(11-i) = 1;
     else
-        VERDADEIRO(i) = 1;
+        VERDADEIRO(11-i) = 1;
     end
-    FP(i) = sum(FALSO)/5;
-    VP(i) = sum(VERDADEIRO)/5;
+    FP(11-i) = sum(FALSO)/5;
+    VP(11-i) = sum(VERDADEIRO)/5;
 end
 figure(1);
 plot(0:1,0:1,'black');
@@ -65,15 +65,15 @@ for i=1:10
     FALSO(i) = 0;
     VERDADEIRO(i) = 0;
 end
-for i=1:numel(vske)
+for i=numel(vske):-1:1  % verificando da direita para a esquerda
     achado = find(ske==vske(i));
-    if (achado>5)  % achado>5 é a segunda classe (coluna) de ske
-        FALSO(i) = 1;
+    if (achado<=5)  % achado<=5 é a primeira classe (coluna) de ske
+        FALSO(11-i) = 1;
     else
-        VERDADEIRO(i) = 1;
+        VERDADEIRO(11-i) = 1;
     end
-    FP(i) = sum(FALSO)/5;
-    VP(i) = sum(VERDADEIRO)/5;
+    FP(11-i) = sum(FALSO)/5;
+    VP(11-i) = sum(VERDADEIRO)/5;
 end
 figure(2);
 plot(0:1,0:1,'black');
