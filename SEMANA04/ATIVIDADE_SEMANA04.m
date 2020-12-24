@@ -52,11 +52,14 @@ for i=numel(vmed):-1:1 % verificando da direita para esquerda
     FP(11-i) = sum(FALSO)/5;
     VP(11-i) = sum(VERDADEIRO)/5;
 end
+AUCmed = trapz(FP,VP);
 figure(1);
 plot(0:1,0:1,'black');
 hold on;
 plot(FP,VP);
 xlabel('%FP(\alpha)'); ylabel('%VP(1-\beta)');
+title(['AUC = ', num2str(AUCmed,'%.3f')]);
+
 
 % ROC em ske
 vske = [ske(:,1);ske(:,2)];
@@ -75,11 +78,13 @@ for i=numel(vske):-1:1  % verificando da direita para a esquerda
     FP(11-i) = sum(FALSO)/5;
     VP(11-i) = sum(VERDADEIRO)/5;
 end
+AUCske = trapz(FP,VP);
 figure(2);
 plot(0:1,0:1,'black');
 hold on;
 plot(FP,VP);
 xlabel('%FP(\alpha)'); ylabel('%VP(1-\beta)');
+title(['AUC = ', num2str(AUCske,'%.3f')]);
 
 
 % % CALCULANDO ROC POR REGRESSÃO LOGÍSTICA
