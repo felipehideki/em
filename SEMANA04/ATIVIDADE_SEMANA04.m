@@ -156,9 +156,9 @@ title(['AUC = ', num2str(AUC,'%.3f')]);
 load('Semana4_exercicio6.mat');
 for caracteristica=1:4
     media_classe1(caracteristica) = mean(figadoadiposo(:,caracteristica));
-    var_classe1(caracteristica) = var(figadoadiposo(:,caracteristica),1);
+    var_classe1(caracteristica) = var(figadoadiposo(:,caracteristica));
     media_classe2(caracteristica) = mean(figadocirrotico(:,caracteristica));
-    var_classe2(caracteristica) = var(figadocirrotico(:,caracteristica),1);
+    var_classe2(caracteristica) = var(figadocirrotico(:,caracteristica));
     FDR(caracteristica) = ((media_classe1(caracteristica)-media_classe2(caracteristica))^2)/(var_classe1(caracteristica)+var_classe2(caracteristica));
     
     vcarac = [figadoadiposo(:,caracteristica);figadocirrotico(:,caracteristica)];
@@ -166,14 +166,31 @@ for caracteristica=1:4
     reg_log = glmfit(vcarac,y,'binomial');   % regressão logística
     p = glmval(reg_log,vcarac,'logit');      % p
 
-    [Xmed,Ymed,~,AUC] = perfcurve(y,p,'true');
+    [Xmed,Ymed,~,AUC(caracteristica)] = perfcurve(y,p,'true');
 
     figure(caracteristica);
     plot(0:1,0:1,'black');
     hold on;
     plot(Xmed,Ymed);
     xlabel('%FP(\alpha)'); ylabel('%VP(1-\beta)');
-    title(['AUC = ', num2str(AUC,'%.3f')]);
+    title(['AUC = ', num2str(AUC(caracteristica),'%.3f')]);
 end
 
-% % ------------------ REALIZAR SELEÇÃO ESCALAR --------------------------
+cara_padrao = [figadoadiposo;figadocirrotico];
+
+sqa1 = cara_padrao(:,1).^2;
+sum_sqa1 = sum(sqa1);
+for j=1:3
+    mult(:,j) = cara_padrao(:,1).*cara_padrao(:,j+1);
+    sum_mult(j) = sum(mult(:,j));
+    sqaj(:,j) = cara_padrao(:,j).^2;
+    sum_sqaj(j) = sum(sqaj(:,j));
+    sqrt_sum_sqaj(j) = sqrt(sum_sqa1*sum_sqaj(j));
+    indice_c(j) = sum_mult(j)/sqrt_sum_sqaj(j);
+    % ÍNDICE DE CORRELAÇÃO COM PESO 0.8
+    mkFDR08(j) = FDR(j+1) - 0.8*abs(indice_c(j));
+    mkAUC08(j) = AUC(j+1) - 0.8*abs(indice_c(j));
+    % ÍNDICE DE CORRELAÇÃO COM PESO 0.5
+    mkFDR05(j) = FDR(j+1) - 0.5*abs(indice_c(j));
+    mkAUC05(j) = AUC(j+1) - 0.5*abs(indice_c(j));
+end
