@@ -162,7 +162,7 @@ for caracteristica=1:4
     FDR(caracteristica) = ((media_classe1(caracteristica)-media_classe2(caracteristica))^2)/(var_classe1(caracteristica)+var_classe2(caracteristica));
     
     vcarac = [figadoadiposo(:,caracteristica);figadocirrotico(:,caracteristica)];
-    y = (1:(numel(figadoadiposo(:,caracteristica))+numel(figadocirrotico(:,caracteristica))))'>numel(figadoadiposo(:,caracteristica)); % classe1 = 0, classe2 = 1
+    y = (1:(numel(figadoadiposo(:,caracteristica))+numel(figadocirrotico(:,caracteristica))))'>=numel(figadoadiposo(:,caracteristica)); % classe1 = 0, classe2 = 1
     reg_log = glmfit(vcarac,y,'binomial');   % regressão logística
     p = glmval(reg_log,vcarac,'logit');      % p
 
@@ -176,14 +176,14 @@ for caracteristica=1:4
 %     title(['AUC = ', num2str(AUC(caracteristica),'%.3f')]);
 end
 
-cara_padrao = [figadoadiposo;figadocirrotico];
+cara_padrao = [figadocirrotico;figadocirrotico];
 
 sqa1 = cara_padrao(:,1).^2;
 sum_sqa1 = sum(sqa1);
 for j=1:3
     mult(:,j) = cara_padrao(:,1).*cara_padrao(:,j+1);
     sum_mult(j) = sum(mult(:,j));
-    sqaj(:,j) = cara_padrao(:,j).^2;
+    sqaj(:,j) = cara_padrao(:,j+1).^2;
     sum_sqaj(j) = sum(sqaj(:,j));
     sqrt_sum_sqaj(j) = sqrt(sum_sqa1*sum_sqaj(j));
     indice_c(j) = sum_mult(j)/sqrt_sum_sqaj(j);
