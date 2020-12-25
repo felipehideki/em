@@ -185,7 +185,7 @@ cara_padrao = [figadoadiposo;figadocirrotico];
 
 sqa1 = cara_padrao(:,1).^2;
 sum_sqa1 = sum(sqa1);
-for j=1:3
+for j=1:3  %1=STD 2=SKEW 3=KURT
     mult(:,j) = cara_padrao(:,1).*cara_padrao(:,j+1);
     sum_mult(j) = sum(mult(:,j));
     sqaj(:,j) = cara_padrao(:,j+1).^2;
