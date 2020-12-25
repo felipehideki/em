@@ -159,6 +159,7 @@ title(['AUC = ', num2str(AUC,'%.3f')]);
 %% 6) SELEÇÃO ESCALAR POR AUC E POR CRITÉRIO DE FISHER (FDR)
 
 load('Semana4_exercicio6.mat');
+
 for caracteristica=1:4
     media_classe1(caracteristica) = mean(figadoadiposo(:,caracteristica));
     var_classe1(caracteristica) = var(figadoadiposo(:,caracteristica));
