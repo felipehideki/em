@@ -181,7 +181,7 @@ for caracteristica=1:4
 %     title(['AUC = ', num2str(AUC(caracteristica),'%.3f')]);
 end
 
-cara_padrao = [figadocirrotico;figadocirrotico];
+cara_padrao = [figadoadiposo;figadocirrotico];
 
 sqa1 = cara_padrao(:,1).^2;
 sum_sqa1 = sum(sqa1);
