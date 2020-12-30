@@ -221,13 +221,42 @@ norm_vec = [med_norm_linear std_norm_linear ske_norm_linear kur_norm_linear]';
 classes{1} = norm_vec(:,1:10);
 classes{2} = norm_vec(:,11:20);
 
-%   SELEÇÃO VETORIAL
+%   SELEÇÃO VETORIAL POR MÉTODO EXAUSTIVO
 [ordem,maxcriterio,J1,J2,J3,combinacoes]= semana4_SelecaoVetorial('exaustivo','J3',classes,2);
 
-% RESULTADO DA SELEÇÃO VETORIAL COM MÉTODO EXAUSTIVO: CARACTERÍSTICAS 1 E 2
+% RESULTADO DA SELEÇÃO VETORIAL POR MÉTODO EXAUSTIVO: CARACTERÍSTICAS 1 E 2
 media = [norm_vec(1,1:10)' norm_vec(1,11:20)'];
 desvio = [norm_vec(2,1:10)' norm_vec(2,11:20)'];
 plot(media,desvio,'.','markersize',20);
 title(['J1 = ', num2str(J1(1),'%.4f'), '   J2 = ', num2str(J2(1),'%.4f'),'   J3 = ', num2str(J3(1),'%.4f')]);
 xlabel('Media');
 ylabel('Desvio');
+
+
+%%  8) DESAFIO
+
+load('Semana4_exercicio8.mat');
+
+%   NORMALIZAÇÃO
+for i=1:20
+    norm_vec(:,i) = [classe1(:,i);classe2(:,i)];
+    norm_vec(:,i) = semana4_normalizacao(norm_vec(:,i));
+end
+
+%   ORGANIZANDO VETORES PARA INPUT NA FUNÇÃO DE SELEÇÃO VETORIAL
+norm_vec = norm_vec';
+classes{1} = norm_vec(:,1:25);
+classes{2} = norm_vec(:,26:50);
+    
+%   SELEÇÃO VETORIAL
+[ordem,maxcriterio,J1,J2,J3,combinacoes]= semana4_SelecaoVetorial('floating','J3',classes,3);
+    
+%   RESULTADO DA SV COM MÉTODO EXAUSTIVO: CARACTERÍSTICAS 1,2,11
+f1 = [norm_vec(1,1:25)' norm_vec(1,26:50)'];
+f2 = [norm_vec(2,1:25)' norm_vec(2,26:50)'];
+f3 = [norm_vec(11,1:25)' norm_vec(11,26:50)'];
+plot3(f1,f2,f3,'.','markersize',20);
+title(['J1 = ', num2str(J1(1),'%.4f'), '   J2 = ', num2str(J2(1),'%.4f'),'   J3 = ', num2str(J3(1),'%.4f')]);
+xlabel('Característica 1');
+ylabel('Característica 2');
+zlabel('Característica 11');
