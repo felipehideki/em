@@ -200,3 +200,34 @@ for j=1:3  %1=STD 2=SKEW 3=KURT
     mkFDR05(j) = FDR(j+1) - 0.5*abs(indice_c(j));
     mkAUC05(j) = AUC(j+1) - 0.5*abs(indice_c(j));
 end
+
+
+%% 7) SELEÇÃO VETORIAL
+
+load('Semana4_exercicio6.mat');
+
+%   NORMALIZAÇÃO
+med_norm_linear = [figadoadiposo(:,1);figadocirrotico(:,1)];
+med_norm_linear = semana4_normalizacao(med_norm_linear);
+std_norm_linear = [figadoadiposo(:,2);figadocirrotico(:,2)];
+std_norm_linear = semana4_normalizacao(std_norm_linear);
+ske_norm_linear = [figadoadiposo(:,3);figadocirrotico(:,3)];
+ske_norm_linear = semana4_normalizacao(ske_norm_linear);
+kur_norm_linear = [figadoadiposo(:,4);figadocirrotico(:,4)];
+kur_norm_linear = semana4_normalizacao(kur_norm_linear);
+
+%   ORGANIZANDO VETORES PARA INPUT NA FUNÇÃO DE SELEÇÃO VETORIAL
+norm_vec = [med_norm_linear std_norm_linear ske_norm_linear kur_norm_linear]';
+classes{1} = norm_vec(:,1:10);
+classes{2} = norm_vec(:,11:20);
+
+%   SELEÇÃO VETORIAL
+[ordem,maxcriterio,J1,J2,J3,combinacoes]= semana4_SelecaoVetorial('exaustivo','J3',classes,2);
+
+% RESULTADO DA SELEÇÃO VETORIAL COM MÉTODO EXAUSTIVO: CARACTERÍSTICAS 1 E 2
+media = [norm_vec(1,1:10)' norm_vec(1,11:20)'];
+desvio = [norm_vec(2,1:10)' norm_vec(2,11:20)'];
+plot(media,desvio,'.','markersize',20);
+title(['J1 = ', num2str(J1(1),'%.4f'), '   J2 = ', num2str(J2(1),'%.4f'),'   J3 = ', num2str(J3(1),'%.4f')]);
+xlabel('Media');
+ylabel('Desvio');
