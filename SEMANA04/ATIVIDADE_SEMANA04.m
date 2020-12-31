@@ -3,8 +3,8 @@
 %% 1) REMOÇÃO DE OUTLIERS
 
 load('Semana4_exercicio1.mat');
-semana4_remocaooutliers(sinal);
-semana4_remocaooutliers2(sinal);
+[outliers,indexes] = semana4_remocaooutliers(sinal);
+% [outliers,indexes] = semana4_remocaooutliers2(sinal);
 
 
 %% 2) NORMALIZAÇÃO
@@ -44,7 +44,7 @@ for i=1:10
 end
 for i=numel(vmed):-1:1 % verificando da direita para esquerda
     achado = find(med==vmed(i));
-    if achado<=5 % achado<=5 é a primeira classe (coluna) de med
+    if achado<=5 % achado<=5 é a segunda classe (coluna) de med
         FALSO(11-i) = 1;
     else
         VERDADEIRO(11-i) = 1;
@@ -160,19 +160,34 @@ title(['AUC = ', num2str(AUC,'%.3f')]);
 
 load('Semana4_exercicio6.mat');
 
+%   NORMALIZAÇÃO
+med_norm_linear = [figadoadiposo(:,1);figadocirrotico(:,1)];
+med_norm_linear = semana4_normalizacao(med_norm_linear);
+std_norm_linear = [figadoadiposo(:,2);figadocirrotico(:,2)];
+std_norm_linear = semana4_normalizacao(std_norm_linear);
+ske_norm_linear = [figadoadiposo(:,3);figadocirrotico(:,3)];
+ske_norm_linear = semana4_normalizacao(ske_norm_linear);
+kur_norm_linear = [figadoadiposo(:,4);figadocirrotico(:,4)];
+kur_norm_linear = semana4_normalizacao(kur_norm_linear);
+norm_vec = [med_norm_linear std_norm_linear ske_norm_linear kur_norm_linear];
+classes{1} = norm_vec(1:10,:);
+classes{2} = norm_vec(11:20,:);
+
 for caracteristica=1:4
-    media_classe1(caracteristica) = mean(figadoadiposo(:,caracteristica));
-    var_classe1(caracteristica) = var(figadoadiposo(:,caracteristica));
-    media_classe2(caracteristica) = mean(figadocirrotico(:,caracteristica));
-    var_classe2(caracteristica) = var(figadocirrotico(:,caracteristica));
+    media_classe1(caracteristica) = mean(classes{1}(:,caracteristica));
+    var_classe1(caracteristica) = var(classes{1}(:,caracteristica));
+    media_classe2(caracteristica) = mean(classes{2}(:,caracteristica));
+    var_classe2(caracteristica) = var(classes{2}(:,caracteristica));
     FDR(caracteristica) = ((media_classe1(caracteristica)-media_classe2(caracteristica))^2)/(var_classe1(caracteristica)+var_classe2(caracteristica));
+    % RESULTADO: CARACTERÍSTICA 1 (MÉDIA) POSSUI MAIOR FDR
     
-    vcarac = [figadoadiposo(:,caracteristica);figadocirrotico(:,caracteristica)];
-    y = (1:(numel(figadoadiposo(:,caracteristica))+numel(figadocirrotico(:,caracteristica))))'>=numel(figadoadiposo(:,caracteristica)); % classe1 = 0, classe2 = 1
+    vcarac = [classes{1}(:,caracteristica);classes{2}(:,caracteristica)];
+    y = (1:(numel(classes{1}(:,caracteristica))+numel(classes{2}(:,caracteristica))))'>=numel(classes{1}(:,caracteristica)); % classe1 = 0, classe2 = 1
     reg_log = glmfit(vcarac,y,'binomial');   % regressão logística
     p = glmval(reg_log,vcarac,'logit');      % p
 
     [Xmed,Ymed,~,AUC(caracteristica)] = perfcurve(y,p,'true');
+    % RESULTADO: CARACTERÍSTICA 1 (MÉDIA) POSSUI MAIOR AUC
 
 %     figure(caracteristica);
 %     plot(0:1,0:1,'black');
@@ -182,7 +197,7 @@ for caracteristica=1:4
 %     title(['AUC = ', num2str(AUC(caracteristica),'%.3f')]);
 end
 
-cara_padrao = [figadoadiposo;figadocirrotico];
+cara_padrao = [classes{1};classes{2}];
 
 sqa1 = cara_padrao(:,1).^2;
 sum_sqa1 = sum(sqa1);
@@ -194,11 +209,11 @@ for j=1:3  %1=STD 2=SKEW 3=KURT
     sqrt_sum_sqaj(j) = sqrt(sum_sqa1*sum_sqaj(j));
     indice_c(j) = sum_mult(j)/sqrt_sum_sqaj(j);
     % ÍNDICE DE CORRELAÇÃO COM PESO 0.8
-    mkFDR08(j) = FDR(j+1) - 0.8*abs(indice_c(j));
-    mkAUC08(j) = AUC(j+1) - 0.8*abs(indice_c(j));
+    mkFDR08(j) = FDR(j+1) - 0.8*abs(indice_c(j)); % FDR
+    mkAUC08(j) = AUC(j+1) - 0.8*abs(indice_c(j)); % AUC
     % ÍNDICE DE CORRELAÇÃO COM PESO 0.5
-    mkFDR05(j) = FDR(j+1) - 0.5*abs(indice_c(j));
-    mkAUC05(j) = AUC(j+1) - 0.5*abs(indice_c(j));
+    mkFDR05(j) = FDR(j+1) - 0.5*abs(indice_c(j)); % FDR
+    mkAUC05(j) = AUC(j+1) - 0.5*abs(indice_c(j)); % AUC
 end
 
 
@@ -221,10 +236,10 @@ norm_vec = [med_norm_linear std_norm_linear ske_norm_linear kur_norm_linear]';
 classes{1} = norm_vec(:,1:10);
 classes{2} = norm_vec(:,11:20);
 
-%   SELEÇÃO VETORIAL POR MÉTODO EXAUSTIVO
+%   SELEÇÃO VETORIAL
 [ordem,maxcriterio,J1,J2,J3,combinacoes]= semana4_SelecaoVetorial('exaustivo','J3',classes,2);
 
-% RESULTADO DA SELEÇÃO VETORIAL POR MÉTODO EXAUSTIVO: CARACTERÍSTICAS 1 E 2
+%   RESULTADO DA SELEÇÃO VETORIAL COM MÉTODO EXAUSTIVO: CARACTERÍSTICAS 1 E 2
 media = [norm_vec(1,1:10)' norm_vec(1,11:20)'];
 desvio = [norm_vec(2,1:10)' norm_vec(2,11:20)'];
 plot(media,desvio,'.','markersize',20);
