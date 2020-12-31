@@ -119,3 +119,35 @@ plot(matrizmN,'.','markersize',20);
     % 2 DIMENSÕES
 [~, ~, matrizmN, erro] = KARLOEVE(vig_REM,2);
 plot(matrizmN(1,:),matrizmN(2,:),'.','markersize',20);
+
+
+%% 4) SVD vs. PCA
+
+load('semana5_exercicio4.mat');
+
+% SVD
+tic;
+[U,S,V] = svd(X);
+matcov = (1/100)*S*S';
+autovalores = flipud(eig(matcov));
+[matrizLL,~] = eig(matcov);
+matrizLL = fliplr(matrizLL);
+erro_SVD = 0;
+
+for i=1:2
+    matrizAuto(i,:) = matrizLL(i,:);
+	erro_SVD = erro_SVD + autovalores(i)/sum(autovalores);
+end
+    matrizmN = matrizAuto*X;
+    erro_SVD = 1-erro_SVD;
+    
+time_SVD = toc;
+plot(matrizmN(1,:),matrizmN(2,:),'.','markersize',20);
+
+
+% PCA
+tic;
+[~,~, matrizmN, erro_PCA] = KARLOEVE(X,2);
+time_PCA = toc;
+figure;
+plot(matrizmN(1,:),matrizmN(2,:),'.','markersize',20);
