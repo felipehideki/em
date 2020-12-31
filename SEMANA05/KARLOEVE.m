@@ -8,7 +8,7 @@ function [autovalores, matrizLL, matrizmN, erro] = KARLOEVE(matrizLN,m)
     
     % OUTPUTS:
     %           autovalores
-    %           matrizLL (autovalores correspondentes aos autovetores)
+    %           matrizLL (autovetores correspondentes aos autovetores)
     %           matrizmN (projeção no novo espaço com 'm' características)
     %           erro (erro quadrático médio em percentual da variância)
 
