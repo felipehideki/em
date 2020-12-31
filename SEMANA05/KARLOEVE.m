@@ -2,7 +2,17 @@
 %   TRANSFORMADA DE KARHUNEN-LOÈVE
 
 function [autovalores, matrizLL, matrizmN, erro] = KARLOEVE(matrizLN,m)
-    % MATRIZ DE COVARIÂNCIA
+    % INPUTS:   
+    %           matrizLN (características x padrões)
+    %           m (número de autovetores, características a selecionar)
+    
+    % OUTPUTS:
+    %           autovalores
+    %           matrizLL (autovalores correspondentes aos autovetores)
+    %           matrizmN (projeção no novo espaço com 'm' características)
+    %           erro (erro quadrático médio em percentual da variância)
+
+    %% MATRIZ DE COVARIÂNCIA
     matcov = cov(matrizLN');
     
     %%  AUTOVALORES
@@ -20,8 +30,8 @@ function [autovalores, matrizLL, matrizmN, erro] = KARLOEVE(matrizLN,m)
             erro = erro + autovalores(i)/sum(autovalores);
         end
         matrizmN = matrizAuto*matrizLN;
+        erro = 1-erro;
     else
         matrizmN = matrizMax;
     end
-    erro = 1-erro;
 end
