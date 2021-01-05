@@ -44,7 +44,7 @@ for i=1:10
 end
 for i=numel(vmed):-1:1 % verificando da direita para esquerda
     achado = find(med==vmed(i));
-    if achado<=5 % achado<=5 é a segunda classe (coluna) de med
+    if achado<=5 % achado<=5 é a primera classe (coluna 1) de med
         FALSO(11-i) = 1;
     else
         VERDADEIRO(11-i) = 1;
@@ -70,7 +70,7 @@ for i=1:10
 end
 for i=numel(vske):-1:1  % verificando da direita para a esquerda
     achado = find(ske==vske(i));
-    if (achado<=5)  % achado<=5 é a primeira classe (coluna) de ske
+    if (achado<=5)  % achado<=5 é a primeira classe (coluna 1) de ske
         FALSO(11-i) = 1;
     else
         VERDADEIRO(11-i) = 1;
