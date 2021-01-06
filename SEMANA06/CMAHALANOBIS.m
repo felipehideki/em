@@ -14,7 +14,6 @@ function [distanciaEuclidiana, distanciaMahalanobis, classificacaoEuclidiana, cl
         if size(u{i})~=size(sigma)
             error('Dimensão de médias diferente de dimensão da matriz de covariância!');
         else
-%             probabilidades(i) = prior(i)*(1/sqrt(((2*pi)^L)*det(sigma)))*exp(-0.5*(x-u{i})'*inv(sigma)*(x-u{i}));
             distanciaEuclidiana(i) = pdist([x';u{i}']);
             distanciaMahalanobis(i) = pdist([x';u{i}'],'mahalanobis',sigma);
         end
