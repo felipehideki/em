@@ -77,3 +77,54 @@ dados = semana5_gerandodadosgaussianos(m,c,500,1,0);
 % d)
 dados = semana5_gerandodadosgaussianos(m,c,2000,1,0);
 [mediad,covarianciad] = MAXLIKE(dados);
+
+
+%% 6) REDES BAYESIANAS
+
+PST = 0.4; % P(S=1)
+PSF = 0.6; % P(S=0)
+
+PHTST = 0.4; % P(H=1|S=1)
+PHTSF = 0.15; % P(H=1|S=0)
+PHFST = 0.6; % P(H=0|S=1)    
+PHFSF = 0.85; % P(H=0|S=0)
+
+PH1THT = 0.95; % P(H1=1|H=1)
+PH1THF = 0.01; % P(H1=1|H=0)
+PH1FHT = 0.05; % P(H1=0|H=1)
+PH1FHF = 0.99; % P(H1=0|H=0)
+
+PH2THT = 0.98; % P(H2=1|H=1)
+PH2THF = 0.05; % P(H2=1|H=0)
+PH2FHT = 0.02; % P(H2=0|H=1)
+PH2FHF = 0.95; % P(H2=0|H=0)
+
+PCTST = 0.2; % P(C=1|S=1)
+PCTSF = 0.11; % P(C=1|S=0)
+PCFST = 0.8; % P(C=0|S=1)
+PCFSF = 0.89; % P(C=0|S=0)
+
+PC1TCT = 0.99; % P(C1=1|C=1)
+PC1TCF = 0.1; % P(C1=1|C=0)
+PC1FCT = 0.01; % P(C1=0|C=1)
+PC1FCF = 0.9; % P(C1=0|C=0)
+
+PC2TCT = 0.98; % P(C2=1|C=1)
+PC2TCF = 0.05; % P(C2=1|C=0)
+PC2FCT = 0.02; % P(C2=0|C=1)
+PC2FCF = 0.95; % P(C2=0|C=0)
+ 
+% a1) P(C=1) = P(C=1|S=1)P(S=1) + P(C=1|S=0)P(S=0)
+PCT = PCTST*PST + PCTSF*PSF;
+% a2) P(H=1) = P(H=1|S=1)P(S=1) + P(H=1|S=0)P(S=0)
+PHT = PHTST*PST + PHTSF*PSF;
+
+% b)
+% P(H=0) = 1-P(H=1)
+PHF = 1-PHT; 
+% P(H1=1) = P(H1=1|H=1)P(H=1) + P(H1=1|H=0)P(H=0)
+PH1T = PH1THT*PHT + PH1THF*PHF; 
+% P(H=1|H1=1) = P(H1=1|H=1)P(H=1)/P(H1=1)
+PHTH1T = PH1THT*PHT/PH1T;
+
+% c) P(C=1|H1=1) = P(H1=1|C=1)*P(C=1)/P(H1=1)
