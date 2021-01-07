@@ -7,25 +7,37 @@ up = [3;3];             % u patológico
 sigma = [1 0; 0 1];     % matriz de covariância (igual para as S e P)
 x = [1.8;1.8];          % padrão
 L = 2;                  % espaço bi-dimensional
+pws = 0.5; pwp = pws;   % Prior P(ws) = P(wp)
 
 % Os padrões observam normalidade, então P(x|wi) pode ser calculado:
-
 % P(x|ws)
-p_ws = (1/sqrt(((2*pi)^L)*det(sigma))) * exp(-0.5*(x-us)'*inv(sigma)*(x-us));
-
+pxws = (1/sqrt(((2*pi)^L)*det(sigma))) * exp(-0.5*(x-us)'*inv(sigma)*(x-us));
 % P(x|wp)
-p_wp = (1/sqrt(((2*pi)^L)*det(sigma))) * exp(-0.5*(x-up)'*inv(sigma)*(x-up));
+pxwp = (1/sqrt(((2*pi)^L)*det(sigma))) * exp(-0.5*(x-up)'*inv(sigma)*(x-up));
 
 % Como o prior P(ws) = P(wp), então: 
 % P(ws|x) = P(x|ws)*P(ws)/P(x) = P(x|ws)*C1
 % P(wp|x) = P(x|wp)*P(wp)/P(x) = P(x|wp)*C2
 % tal que C1 = C2.
 
+% Marginalização P(x) = sum_classe(P(x|classe)P(classe))
+px = pxws*pws + pxwp*pwp;
+
+% Aplicando o Teorema de Bayes: P(w|x) = P(x|w)P(w)/P(x)
+pwsx = pxws*pws/px;
+pwpx = pxwp*pwp/px;
+
 % 1 A) razão P(ws|x)/P(wp|x)
-ratio_wswp = p_ws/p_wp;
+ratio_wswp = pwsx/pwpx;
 
 % 1 B) razão P(ws|x)/P(wp|x) para P(ws) = 1/6
-ratio_wswp = (1/6)*p_ws/p_wp;
+pws = 1/6;
+pwp = 1-pws;
+px = pxws*pws + pxwp*pwp;
+pwsx = pxws*pws/px;
+pwpx = pxwp*pwp/px;
+ratio_wswp = pwsx/pwpx;
+
 
 
 %% 2) CLASSIFICADOR BAYESIANO
@@ -127,4 +139,16 @@ PH1T = PH1THT*PHT + PH1THF*PHF;
 % P(H=1|H1=1) = P(H1=1|H=1)P(H=1)/P(H1=1)
 PHTH1T = PH1THT*PHT/PH1T;
 
-% c) P(C=1|H1=1) = P(H1=1|C=1)*P(C=1)/P(H1=1)
+% c)
+% P(H1=1|S=1) = P(H1=1|H=1)P(H=1|S=1) + P(H1=1|H=0)P(H=0|S=1)
+PH1TST = PH1THT*PHTST + PH1THF*PHFST;
+% P(S=1|H1=1) = P(H1=1|S=1)P(S=1)/P(H1=1)
+PSTH1T = PH1TST*PST/PH1T;
+% P(H1=1|S=0) = P(H1=1|H=1)P(H=1|S=0) + P(H1=1|H=0)P(H=0|S=0)
+PH1TSF = PH1THT*PHTSF + PH1THF*PHFSF;
+% P(S=0|H1=1) = P(H1=1|S=0)P(S=0)/P(H1=1)
+PSFH1T = PH1TSF*PSF/PH1T;
+
+% P(C=1|H1=1) = P(C=1|S=1,H1=1)P(S=1|H1=1) + P(C=1|S=0,H1=1)P(S=0|H1=1)
+% P(C=1|H1=1) = P(C=1|S=1)P(S=1|H1=1) + P(C=1|S=0)P(S=0|H1=1)
+PCTH1T = PCTST*PSTH1T + PCTSF*PSFH1T;
