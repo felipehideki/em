@@ -28,7 +28,7 @@ function [probabilidades, classificacao] = CBAYES(u,sigma,prior,x)
                 i = i+1;
             end
         else
-            probabilidades(i) = pxw(i)*prior(i)/px;
+            probabilidades(i) = pxw(i)*prior(i)/px; % Teorema de Bayes: P(w|x) = P(x|w)P(w)/P(x)
             i = i+1;
         end
     end   
