@@ -35,7 +35,7 @@ function [w,iteracoes] = POCKET(xClasse1,xClasse2,max_iteracoes,rho)
         % ou vice-versa, invertendo as duas metades só resulta numa
         % classificação invertida (classe1->classe2, classe2->classe1)
         
-        % então, para favilitar a busca das classificações incorretas,
+        % então, para facilitar a busca das classificações incorretas,
         % basta inverter o sinal de pk para uma das metades. Ou seja, 
         % selecionar todos os pk incorretos será selecionar todos os pk de 
         % mesmo sinal para ambas as metades.
