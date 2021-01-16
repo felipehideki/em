@@ -35,4 +35,3 @@ POCKET(Classe1',Classe2d',10000,0.05);
 figure;
 % Classe1 x Classe2d, rho = 0.01
 POCKET(Classe1',Classe2d',10000,0.01);
-figure;
