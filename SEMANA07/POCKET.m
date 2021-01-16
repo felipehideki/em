@@ -65,13 +65,13 @@ function [wp,i] = POCKET(xClasse1,xClasse2,max_iteracoes,rho)
         i = i+1;
         if i>max_iteracoes | isempty(indicesYe)
             i = i-1;
-            h1 = plot( xClasse1(:,1), xClasse1(:,2), '.b' ); hold on; 
-            h2 = plot( xClasse2(:,1), xClasse2(:,2), '.r' ); hold on; 
+            c1 = plot( xClasse1(:,1), xClasse1(:,2), '.b' ); hold on; 
+            c2 = plot( xClasse2(:,1), xClasse2(:,2), '.r' ); hold on; 
             dominio = linspace(min(y(:,1)), max(y(:,1)));
             imagem = -(wp(3)+wp(1)*dominio)/wp(2);
             perceptron = plot(dominio,imagem,'-black');
             title(['\rho = ', num2str(rho,'%.2f'),', iterações: ', num2str(i)]);
-            legend([h1,h2,perceptron], {'classe 1','classe 2','perceptron'});
+            legend([c1,c2,perceptron], {'classe 1','classe 2','perceptron'});
             toc;
             break
         end
