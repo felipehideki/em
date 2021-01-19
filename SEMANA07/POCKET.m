@@ -1,5 +1,5 @@
 function [wp,i] = POCKET(xClasse1,xClasse2,max_iteracoes,rho)
-    tic;
+
 %   INPUT:
 %           xClasse1: matriz de dados da classe1, características x padrões
 %           xClasse2: matriz de dados da classe2, características x padrões
@@ -9,6 +9,7 @@ function [wp,i] = POCKET(xClasse1,xClasse2,max_iteracoes,rho)
 %           wp: vetor de pesos pocket
 %           i: número de iterações realizadas para convergência
 
+    tic;
     nx = size(xClasse1,1); % número de características de x
     indice1 = 1:nx; % índices dos elementos da 1ªmetade (classe-1)
     indice2 = (nx+1):(2*nx); % índices dos elementos da 2ªmetade (classe+1)
@@ -24,7 +25,7 @@ function [wp,i] = POCKET(xClasse1,xClasse2,max_iteracoes,rho)
     indicesYe = 1;
     i = 1;
     
-    while(~isempty(indicesYe))
+    while(1)
         pk = y*wi;
         % Para este algoritmo, define-se que
         % se p com índice k de 1 até N/2 ("primeira metade"):
