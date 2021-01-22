@@ -15,6 +15,7 @@ function [distanciaEuclidiana, distanciaMahalanobis, classificacaoEuclidiana, cl
 %           distanciaMahalanobis (entre x e médias)
 %           classificacaoEuclidiana
 %           classificacaoMahalanobis
+
     L = numel(u);
     for i=1:L
         if size(u{i})~=size(sigma)
