@@ -18,7 +18,7 @@ function [w] = LS(xClasse1,xClasse2,alpha)
     y = [xClasse1;xClasse2];
     y = [y,ones(size(y,1),1)]; % vetor com L+1 dimensões
     
-    % Vetor de pesos pelo critério LS (X'X\X'Y)
+    % Vetor de pesos pelo critério LS (w = X'X\X'Y)
     w = inv((y'*y)+alpha*ones(size(y,2)))*(y'*classes);
     
     % Plot
