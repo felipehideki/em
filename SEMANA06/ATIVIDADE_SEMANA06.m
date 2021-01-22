@@ -42,12 +42,12 @@ ratio_wswp = pwsx/pwpx;
 
 %% 2) CLASSIFICADOR BAYESIANO
 
-% [probabilidades, classificacao] = CBAYES(u,sigma,prior,x);
+% [probabilidades, classificacao] = BAYES(u,sigma,prior,x);
 
 
 %% 3) CLASSIFICADOR DE DISTÂNCIA MÍNIMA DE MAHALANOBIS
 
-% [distanciaEuclidiana, distanciaMahalanobis, classificacaoEuclidiana,classificacaoMahalanobis] = CMAHALANOBIS(u,sigma,prior,x);
+% [distanciaEuclidiana, distanciaMahalanobis, classificacaoEuclidiana,classificacaoMahalanobis] = MAHALANOBIS(u,sigma,prior,x);
 
 
 %% 4) TESTANDO CLASSIFICADORES
@@ -68,10 +68,10 @@ hold on;
 plot3(x(1),x(2),x(3),'*','color','k','markersize',20);
 
 % b)
-[~, classificacao] = CBAYES(u,sigma,prior,x);
+[~, classificacao] = BAYES(u,sigma,prior,x);
 
 % c) d)
-[~,~, classificacaoEuclidiana,classificacaoMahalanobis] = CMAHALANOBIS(u,sigma{1},prior,x);
+[~,~, classificacaoEuclidiana,classificacaoMahalanobis] = MAHALANOBIS(u,sigma{1},prior,x);
 
 
 %% 5) MAXIMUM LIKELIHOOD PARAMETER ESTIMATION
