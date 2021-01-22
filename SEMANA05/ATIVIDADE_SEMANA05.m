@@ -2,7 +2,7 @@
 
 %% 1) PCA: TRANSFORMADA DE KARHUNEN-LOÈVE
 
-% [autovalores, matrizLL, matrizmN, erro] = KARLOEVE(matrizLN,m);
+% [autovalores, matrizLL, matrizmN, erro] = KL(matrizLN,m);
 
 
 %% 2) TESTANDO PCA a)
@@ -15,12 +15,12 @@ s(:,:,2) = s(:,:,1);
 [dados, classes] = semana5_gerandodadosgaussianos(m,s,400);
 
 % PCA (2 DIMENSÕES)
-[~, ~, matrizmN, erro] = KARLOEVE(dados,2);
+[~, ~, matrizmN, erro] = KL(dados,2);
     % RESULTADO: ERRO = 0.1677
 plot(matrizmN(1,:),matrizmN(2,:),'.','markersize',20);
 
 % PCA (1 DIMENSÃO)
-[~, ~, matrizmN, erro] = KARLOEVE(dados,1);
+[~, ~, matrizmN, erro] = KL(dados,1);
     % RESULTADO: ERRO = 0.3562
 plot(matrizmN,'.','markersize',20);
 
@@ -34,12 +34,12 @@ s(:,:,2) = s(:,:,1);
 [dados, classes] = semana5_gerandodadosgaussianos(m,s,400);
 
 % PCA (2 DIMENSÕES)
-[~, ~, matrizmN, erro] = KARLOEVE(dados,2);
+[~, ~, matrizmN, erro] = KL(dados,2);
     % RESULTADO: ERRO = 0.1663
 plot(matrizmN(1,:),matrizmN(2,:),'.','markersize',20);
 
 % PCA (1 DIMENSÃO)
-[~, ~, matrizmN, erro] = KARLOEVE(dados,1);
+[~, ~, matrizmN, erro] = KL(dados,1);
     % RESULTADO: ERRO = 0.5575
 plot(matrizmN,'.','markersize',20);
 
@@ -106,18 +106,18 @@ vig_REM = [vigilia REM];
 
 % % PCA VIGÍLIA X NREM4
     % 1 DIMENSÃO
-[~, ~, matrizmN, erro] = KARLOEVE(vig_NREM4,1);
+[~, ~, matrizmN, erro] = KL(vig_NREM4,1);
 plot(matrizmN,'.','markersize',20);
     % 2 DIMENSÕES
-[~, ~, matrizmN, erro] = KARLOEVE(vig_NREM4,2);
+[~, ~, matrizmN, erro] = KL(vig_NREM4,2);
 plot(matrizmN(1,:),matrizmN(2,:),'.','markersize',20);
 
 % % PCA VIGÍLIA X REM
     % 1 DIMENSÃO
-[~, ~, matrizmN, erro] = KARLOEVE(vig_REM,1);
+[~, ~, matrizmN, erro] = KL(vig_REM,1);
 plot(matrizmN,'.','markersize',20);
     % 2 DIMENSÕES
-[~, ~, matrizmN, erro] = KARLOEVE(vig_REM,2);
+[~, ~, matrizmN, erro] = KL(vig_REM,2);
 plot(matrizmN(1,:),matrizmN(2,:),'.','markersize',20);
 
 
@@ -147,7 +147,7 @@ plot(matrizmN(1,:),matrizmN(2,:),'.','markersize',20);
 
 % PCA
 tic;
-[~,~, matrizmN, erro_PCA] = KARLOEVE(X,2);
+[~,~, matrizmN, erro_PCA] = KL(X,2);
 time_PCA = toc;
 figure;
 plot(matrizmN(1,:),matrizmN(2,:),'.','markersize',20);
