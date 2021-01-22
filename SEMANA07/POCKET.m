@@ -71,17 +71,33 @@ function [wp,i] = POCKET(xClasse1,xClasse2,max_iteracoes,rho)
         i = i+1;
         if i>max_iteracoes | isempty(indicesYe)
             i = i-1;
-            c1 = plot(xClasse1(:,1),xClasse1(:,2),'.b'); 
-            hold on; 
-            c2 = plot(xClasse2(:,1),xClasse2(:,2),'.r');
-            hold on;
-            dominio = linspace(min(y(:,1)), max(y(:,1)));
-            imagem = -(wp(3)+wp(1)*dominio)/wp(2);
-            perceptron = plot(dominio,imagem,'-black');
-            title(['\rho = ', num2str(rho,'%.2f'),', iterações: ', num2str(i)]);
-            legend([c1,c2,perceptron], {'classe 1','classe 2','perceptron'});
-            toc;
-            break
+            switch size(y,2)
+                case 3 % L+1=3 (L = 2 dimensões)
+                    c1 = plot(xClasse1(:,1),xClasse1(:,2),'.b'); 
+                    hold on; 
+                    c2 = plot(xClasse2(:,1),xClasse2(:,2),'.r');
+                    hold on;
+                    dominio = linspace(min(y(:,1)), max(y(:,1)));
+                    imagem = -(wp(3)+wp(1)*dominio)/wp(2); % plano w1x+w2y+w3=0
+                    perceptron = plot(dominio,imagem,'-black');
+                    title(['\rho = ', num2str(rho,'%.2f'),', iterações: ', num2str(i)]);
+                    legend([c1,c2,perceptron], {'classe 1','classe 2','perceptron'});
+                    toc;
+                    break;
+                case 4 % L+1=4 (L = 3 dimensões)
+                    c1 = plot3(xClasse1(:,1),xClasse1(:,2),xClasse1(:,3),'.b'); 
+                    hold on; 
+                    c2 = plot3(xClasse2(:,1),xClasse2(:,2),xClasse2(:,3),'.r');
+                    hold on;
+                    [x y] = meshgrid(min(y(:,1)):max(y(:,1)),min(y(:,2)):max(y(:,2)));
+                    z = -((wp(1)*x)+(wp(2)*y)+wp(4))/wp(3); % plano w1x+w2y+w3z+w4=0
+                    perceptron = surf(x,y,z,ones(size(x)));
+                    perceptron.EdgeColor = 'none';
+                    title(['\rho = ', num2str(rho,'%.2f'),', iterações: ', num2str(i)]);
+                    legend([c1,c2,perceptron], {'classe 1','classe 2','perceptron'});
+                    toc;
+                    break;
+            end
         end
     end
 end
