@@ -1,5 +1,10 @@
 function [wp,i] = POCKET(xClasse1,xClasse2,max_iteracoes,rho)
 
+%   FUNÇÃO:
+%           [wp,i] = POCKET(xClasse1,xClasse2,max_iteracoes,rho)
+%
+%   Essa função implementa o algoritmo para o perceptron pocket.
+%
 %   INPUT:
 %           xClasse1: matriz de dados da classe1, características x padrões
 %           xClasse2: matriz de dados da classe2, características x padrões
