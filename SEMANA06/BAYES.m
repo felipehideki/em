@@ -1,12 +1,19 @@
-function [probabilidades, classificacao] = CBAYES(u,sigma,prior,x)
-    % INPUTS:
-    %           u = cell array 1 x M de médias L x 1
-    %           sigma = cell array 1 x M de matrizes de covariância L x L
-    %           prior = vetor de priors L x 1
-    %           x = vetor de características/padrões L x 1
-    % OUTPUTS:
-    %           probabilidades(i) = probabilidade P(wi|x)
-    %           classificacao = classe com maior P(w|x)
+function [probabilidades, classificacao] = BAYES(u,sigma,prior,x)
+
+%   FUNÇÃO:
+%           [probabilidades, classificacao] = BAYES(u,sigma,prior,x)
+%
+%   Essa função implementa o algoritmo para o classificador de Bayes.
+%
+%   INPUTS:
+%           u = cell array 1 x M de médias L x 1
+%           sigma = cell array 1 x M de matrizes de covariância L x L
+%           prior = vetor de priors L x 1
+%           x = vetor de características/padrões L x 1
+%   OUTPUTS:
+%           probabilidades(i) = probabilidade P(wi|x)
+%           classificacao = classe com maior P(w|x)
+
     if size(u)~=size(sigma)
         error('Quantidade de médias diferente da quantidade de matrizes de covariância!');
     end
