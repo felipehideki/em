@@ -1,7 +1,7 @@
 %   SEMANA 05
 %   TRANSFORMADA DE KARHUNEN-LOÈVE
 
-function [autovalores, matrizLL, matrizmN, erro] = KARLOEVE(matrizLN,m)
+function [autovalores, matrizLL, matrizmN, erro] = KL(matrizLN,m)
     % INPUTS:   
     %           matrizLN (características x padrões)
     %           m (número de autovetores, características a selecionar)
