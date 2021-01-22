@@ -1,6 +1,3 @@
-%   SEMANA 05
-%   TRANSFORMADA DE KARHUNEN-LOÈVE
-
 function [autovalores, matrizLL, matrizmN, erro] = KL(matrizLN,m)
     % INPUTS:   
     %           matrizLN (características x padrões)
@@ -15,12 +12,10 @@ function [autovalores, matrizLL, matrizmN, erro] = KL(matrizLN,m)
     %% MATRIZ DE COVARIÂNCIA
     matcov = cov(matrizLN');
     
-    %%  AUTOVALORES
-    autovalores = flipud(eig(matcov));
-    
-    %%  AUTOVETORES
-    [matrizLL,~] = eig(matcov);
-    matrizLL = fliplr(matrizLL);
+    %%  AUTOVETORES E AUTOVALORES
+    [mAutovet,mAutoval] = eig(matcov);
+    [autovalores,index] = sort(diag(mAutoval),'descend');
+    matrizLL = mAutovet(:,index);
     erro = 0;
     matrizMax = matrizLL*matrizLN;
     
@@ -34,4 +29,5 @@ function [autovalores, matrizLL, matrizmN, erro] = KL(matrizLN,m)
     else
         matrizmN = matrizMax;
     end
+
 end
