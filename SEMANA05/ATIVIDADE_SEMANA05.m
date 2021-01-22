@@ -22,7 +22,9 @@ plot(matrizmN(1,:),matrizmN(2,:),'.','markersize',20);
 % PCA (1 DIMENSÃO)
 [~, ~, matrizmN, erro] = KL(dados,1);
     % RESULTADO: ERRO = 0.3562
-plot(matrizmN,'.','markersize',20);
+plot(matrizmN(1:200),'.','markersize',20);
+hold on;
+plot(matrizmN(201:400),'.','markersize',20);
 
 
 %% 2) TESTANDO PCA b)
@@ -41,7 +43,9 @@ plot(matrizmN(1,:),matrizmN(2,:),'.','markersize',20);
 % PCA (1 DIMENSÃO)
 [~, ~, matrizmN, erro] = KL(dados,1);
     % RESULTADO: ERRO = 0.5575
-plot(matrizmN,'.','markersize',20);
+plot(matrizmN(1:200),'.','markersize',20);
+hold on;
+plot(matrizmN(201:400),'.','markersize',20);
 
 
 %% 3) TESTANDO PCA EM DADOS REAIS: POLISSONOGRAFIA SEMANA 3+4
