@@ -82,8 +82,6 @@ function [wp,i] = POCKET(xClasse1,xClasse2,max_iteracoes,rho)
                     perceptron = plot(dominio,imagem,'-black');
                     title(['\rho = ', num2str(rho,'%.2f'),', iterações: ', num2str(i)]);
                     legend([c1,c2,perceptron], {'classe 1','classe 2','perceptron'});
-                    toc;
-                    break;
                 case 4 % L+1=4 (L = 3 dimensões)
                     c1 = plot3(xClasse1(:,1),xClasse1(:,2),xClasse1(:,3),'.b'); 
                     hold on; 
@@ -95,9 +93,9 @@ function [wp,i] = POCKET(xClasse1,xClasse2,max_iteracoes,rho)
                     perceptron.EdgeColor = 'none';
                     title(['\rho = ', num2str(rho,'%.2f'),', iterações: ', num2str(i)]);
                     legend([c1,c2,perceptron], {'classe 1','classe 2','perceptron'});
-                    toc;
-                    break;
             end
+            toc;
+            break;
         end
     end
 end
