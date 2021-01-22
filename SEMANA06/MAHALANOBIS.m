@@ -5,12 +5,12 @@ function [distanciaEuclidiana, distanciaMahalanobis, classificacaoEuclidiana, cl
 %
 %   Essa função implementa o algoritmo para o classificador de Mahalanobis.
 %
-% INPUTS:
+%	INPUTS:
 %           u = cell array 1 x M de médias L x 1
 %           sigma = matriz de covariância L x L
 %           prior = vetor de priors L x 1
 %           x = vetor de características/padrões L x 1
-% OUTPUTS:
+%   OUTPUTS:
 %           distanciaEuclidiana (entre x e médias)
 %           distanciaMahalanobis (entre x e médias)
 %           classificacaoEuclidiana
