@@ -27,7 +27,6 @@ LS(dados(:,1:200)',dados(:,201:400)',1);
 % title(['\alpha = ', num2str(alpha,'%.2f')]);
 % legend([c1,c2,ls], {'classe 1','classe 2','LS'});
 
-
 % b) FDA
 
 % Conjunto de dados (1) da semana 5
