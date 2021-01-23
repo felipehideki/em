@@ -1,24 +1,25 @@
-function [Y] = FDA(xClasse1,xClasse2,L)
+function [Y] = FDA(classes)
     
 %   FUNÇÃO:
-%           [Y] = FDA(xClasse1,xClasse2,L)
+%           [Y] = FDA(classes)
 %
 %   Essa função implementa o algoritmo para a análise discriminante de Fisher.
 %
 %   INPUTS:   
-%           xClasse1 = matriz de características x padrões da classe 1
-%           xClasse2 = matriz de características x padrões da classe 2
-%           L = número de dimensões do novo espaço de características
+%           classes = matriz de células onde classes{i} = características x padrões
 %   OUTPUTS:
-%           Y = matriz com os dados originais projetados por FDA
+%           Y = matriz com os dados originais projetados por FDA em dimensão C-1
     
-    classe{1} = xClasse1;
-    classe{2} = xClasse2;
-    [Sb,Sw] = SCATTER(classe);
+    [Sb,Sw] = SCATTER(classes);
     mat = Sw\Sb;
     [mAutovet,mAutoval] = eig(mat);
     [~,index] = sort(diag(mAutoval),'descend');
     A = mAutovet(:,index)';
-    Y = A(1:L,:)*[classe{1} classe{2}];
+    L = size(classes,2);
+    allclasses = [];
+    for i=1:L
+        allclasses = [allclasses classes{i}];
+    end
+    Y = A(1:L-1,:)*allclasses;
     Y = Y';
 end    
