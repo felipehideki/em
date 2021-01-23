@@ -33,7 +33,6 @@ function [w] = LS(xClasse1,xClasse2,alpha)
             ls = plot(dominio,imagem,'-black');
             title(['\alpha = ', num2str(alpha,'%.2f')]);
             legend([c1,c2,ls], {'classe 1','classe 2','LS'});
-            toc;
         case 4 % L+1=4 (L = 3 dimensões)
             c1 = plot3(xClasse1(:,1),xClasse1(:,2),xClasse1(:,3),'.b'); 
             hold on; 
@@ -45,6 +44,6 @@ function [w] = LS(xClasse1,xClasse2,alpha)
             ls.EdgeColor = 'none';
             title(['\alpha = ', num2str(alpha,'%.2f')]);
             legend([c1,c2,ls], {'classe 1','classe 2','LS'});
-            toc;
     end
+    toc;
 end
