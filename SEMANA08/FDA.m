@@ -14,7 +14,7 @@ function [Y] = FDA(xClasse1,xClasse2,L)
     
     classe{1} = xClasse1;
     classe{2} = xClasse2;
-    [Sb,Sw]=SCATTER(classe,size(classe{1},1));
+    [Sb,Sw] = SCATTER(classe);
     mat = Sw\Sb;
     [mAutovet,mAutoval] = eig(mat);
     [~,index] = sort(diag(mAutoval),'descend');
