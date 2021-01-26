@@ -77,7 +77,8 @@ function [wp,i] = POCKET(xClasse1,xClasse2,max_iteracoes,rho)
                     hold on; 
                     c2 = plot(xClasse2(:,1),xClasse2(:,2),'.r');
                     hold on;
-                    dominio = linspace(min(y(:,1)), max(y(:,1)));
+%                     dominio = linspace(min(y(:,1)), max(y(:,1)));
+                    dominio = get(gca,'Xlim');
                     imagem = -(wp(3)+wp(1)*dominio)/wp(2); % reta w1x+w2y+w3=0
                     perceptron = plot(dominio,imagem,'-black');
                     title(['\rho = ', num2str(rho,'%.2f'),', iterações: ', num2str(i)]);
