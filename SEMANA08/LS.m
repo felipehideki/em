@@ -28,7 +28,8 @@ function [w] = LS(xClasse1,xClasse2,alpha)
             hold on; 
             c2 = plot3(xClasse2(:,1),xClasse2(:,2),'.r');
             hold on;
-            dominio = linspace(min(y(:,1)), max(y(:,1)));
+%             dominio = linspace(min(y(:,1)), max(y(:,1)));
+            dominio = get(gca,'Xlim');
             imagem = -(w(3)+w(1)*dominio)/w(2); % reta w1x+w2y+w3=0
             ls = plot(dominio,imagem,'-black');
             title(['\alpha = ', num2str(alpha,'%.2f')]);
