@@ -24,9 +24,9 @@ function [w] = LS(xClasse1,xClasse2,alpha)
     % Plot
     switch size(y,2)
         case 3 % L+1=3 (L = 2 dimensões)
-            c1 = plot3(xClasse1(:,1),xClasse1(:,2),'.b'); 
+            c1 = plot(xClasse1(:,1),xClasse1(:,2),'.b'); 
             hold on; 
-            c2 = plot3(xClasse2(:,1),xClasse2(:,2),'.r');
+            c2 = plot(xClasse2(:,1),xClasse2(:,2),'.r');
             hold on;
 %             dominio = linspace(min(y(:,1)), max(y(:,1)));
             dominio = get(gca,'Xlim');
