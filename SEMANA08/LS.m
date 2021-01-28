@@ -8,7 +8,7 @@ function [w] = LS(xClasse1,xClasse2,alpha)
 %   INPUT:
 %           xClasse1: matriz de dados da classe1, características x padrões
 %           xClasse2: matriz de dados da classe2, características x padrões
-%           p: parâmetro de aprendizagem do classificador
+%           alpha: parâmetro de aprendizagem do classificador
 %   OUTPUT:
 %           w: vetor de peso resultante do critério Least Squares (LS)
 
