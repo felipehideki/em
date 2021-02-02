@@ -69,6 +69,7 @@ function [wp,i] = POCKET(xClasse1,xClasse2,max_iteracoes,rho)
         end
         wi = wi_new;
         i = i+1;
+        erro = numel(indicesYe)/size(y,1);
         if i>max_iteracoes | isempty(indicesYe)
             i = i-1;
             switch size(y,2)
@@ -81,7 +82,7 @@ function [wp,i] = POCKET(xClasse1,xClasse2,max_iteracoes,rho)
                     dominio = get(gca,'Xlim');
                     imagem = -(wp(3)+wp(1)*dominio)/wp(2); % reta w1x+w2y+w3=0
                     perceptron = plot(dominio,imagem,'-black');
-                    title(['\rho = ', num2str(rho,'%.2f'),', iterações: ', num2str(i)]);
+                    title({['\rho = ', num2str(rho,'%.2f'),', iterações: ', num2str(i)];['erro: ',num2str(erro)]});
                     legend([c1,c2,perceptron], {'classe 1','classe 2','perceptron'});
                 case 4 % L+1=4 (L = 3 dimensões)
                     c1 = plot3(xClasse1(:,1),xClasse1(:,2),xClasse1(:,3),'.b'); 
@@ -92,7 +93,7 @@ function [wp,i] = POCKET(xClasse1,xClasse2,max_iteracoes,rho)
                     z = -((wp(1)*x)+(wp(2)*y)+wp(4))/wp(3); % plano w1x+w2y+w3z+w4=0
                     perceptron = surf(x,y,z,ones(size(x)));
                     perceptron.EdgeColor = 'none';
-                    title(['\rho = ', num2str(rho,'%.2f'),', iterações: ', num2str(i)]);
+                    title({['\rho = ', num2str(rho,'%.2f'),', iterações: ', num2str(i)];['erro: ',num2str(erro)]});
                     legend([c1,c2,perceptron], {'classe 1','classe 2','perceptron'});
             end
             toc;
