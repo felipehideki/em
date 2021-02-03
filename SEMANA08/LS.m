@@ -20,6 +20,13 @@ function [w] = LS(xClasse1,xClasse2,alpha)
     
     % Vetor de pesos pelo critério LS (w = X'X\X'Y)
     w = inv((y'*y)+alpha*ones(size(y,2)))*(y'*classes);
+   
+    % Encontrando erros
+    indice1 = find(classes<0); % índices dos elementos da 1ªmetade (classe-1)
+    pk = y*w;
+    pk(indice1) = -pk(indice1);
+    indicesYe = find(pk<0);
+    erro = numel(indicesYe)/size(y,1);
     
     % Plot
     switch size(y,2)
@@ -32,7 +39,7 @@ function [w] = LS(xClasse1,xClasse2,alpha)
             dominio = get(gca,'Xlim');
             imagem = -(w(3)+w(1)*dominio)/w(2); % reta w1x+w2y+w3=0
             ls = plot(dominio,imagem,'-black');
-            title(['\alpha = ', num2str(alpha,'%.2f')]);
+            title({['\alpha = ', num2str(alpha,'%.2f')];['erro = ', num2str(erro)]});
             legend([c1,c2,ls], {'classe 1','classe 2','LS'});
         case 4 % L+1=4 (L = 3 dimensões)
             c1 = plot3(xClasse1(:,1),xClasse1(:,2),xClasse1(:,3),'.b'); 
@@ -43,7 +50,7 @@ function [w] = LS(xClasse1,xClasse2,alpha)
             z = -((w(1)*x)+(w(2)*y)+w(4))/w(3); % plano w1x+w2y+w3z+w4=0
             ls = surf(x,y,z,ones(size(x)));
             ls.EdgeColor = 'none';
-            title(['\alpha = ', num2str(alpha,'%.2f')]);
+            title({['\alpha = ', num2str(alpha,'%.2f')];['erro = ', num2str(erro)]});
             legend([c1,c2,ls], {'classe 1','classe 2','LS'});
     end
     toc;
