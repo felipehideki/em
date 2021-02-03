@@ -1,4 +1,4 @@
-function [w,erro] = LS(xClasse1,xClasse2,alpha)
+function [w] = LS(xClasse1,xClasse2,alpha)
 
 %   FUNÇÃO:
 %           [w] = LS(xClasse1,xClasse2,alpha)
