@@ -1,4 +1,4 @@
-function [wp,i,erro] = POCKET(xClasse1,xClasse2,max_iteracoes,rho)
+function [wp,i] = POCKET(xClasse1,xClasse2,max_iteracoes,rho)
 
 %   FUNÇÃO:
 %           [wp,i] = POCKET(xClasse1,xClasse2,max_iteracoes,rho)
