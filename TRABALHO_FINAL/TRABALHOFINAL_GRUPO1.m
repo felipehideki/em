@@ -1,15 +1,14 @@
 % % TRABALHO FINAL DE ENGENHARIA MÉDICA 2S/2020
-% % GRUPO 1
+% % GRUPO 1: FELIPE HIDEKI HATANO & PEDRO ROCHA SANTOS
 
 % % CLASSIFICAÇÃO DE INDIVÍDUOS SAUDÁVEIS/DOENTES DE UM BANCO DE DADOS DE
 % % AUSCULTAÇÕES TORÁXICAS
 
 
 
-%% SEPARANDO OS CICLOS RESPIRATÓRIOS EM CADA GRAVAÇÃO
+% % EXTRAINDO INÍCIO E FINAL DOS CICLOS RESPIRATÓRIOS EM CADA GRAVAÇÃO
 pathname = 'C:\Users\$USER$\Desktop\EngenhariaMedica\TRABALHOFINAL\Respiratory_Sound_Database\Respiratory_Sound_Database\audio_and_txt_files';
 
-% % EXTRAINDO INFORMAÇÕES DOS ARQUIVOS .txt
 S = dir(fullfile(pathname,'*.txt'));
 outtxt = cell(size(S));
 w = waitbar(0,'Importando arquivos .txt');
@@ -22,7 +21,6 @@ end
 delete(w);
 clear filename filepath k S w
 
-% % SEPARANDO OS CICLOS
 S = dir(fullfile(pathname,'*.wav'));
 ciclos = cell(size(S));
 w = waitbar(0,'Importando arquivos .wav');
@@ -42,7 +40,6 @@ end
 delete(w);
 clear dados filename filepath fs i k w outtxt
 
-% % RELACIONANDO AS CLASSES COM OS CICLOS
 T = readtable('C:\Users\$USER$\Desktop\EngenhariaMedica\TRABALHOFINAL\Respiratory_Sound_Database\Respiratory_Sound_Database\patient_diagnosis.csv');
 w = waitbar(0,'Relacionando classes');
 classes = table;
@@ -56,3 +53,4 @@ for j = 1:size(S)
     end
 end
 delete(w);
+clear id j m pathname S T w
