@@ -36,10 +36,11 @@ for k = 1:numel(S)
         else %caso o primeiro índice do ciclo seja 0
             ciclos{k,i} = dados(1:(ceil(outtxt{k}(i,2)*fs(k))));
         end
+        
     end
 end
 delete(w);
-clear dados filename filepath i k w outtxt
+clear dados filename filepath i k w
 
 T = readtable('C:\Users\$USER$\Desktop\EngenhariaMedica\TRABALHOFINAL\Respiratory_Sound_Database\Respiratory_Sound_Database\patient_diagnosis.csv');
 w = waitbar(0,'Relacionando classes');
@@ -80,10 +81,10 @@ end
 delete(w);
 clear i j w ciclos fs
 
-
 % % ORGANIZANDO DADOS
 w = waitbar(0,'Organizando dados');
 dados = zeros(sum(sum(media~=0)),7);
+crackle_wheeze = zeros(sum(sum(media~=0)),2);
 aux = cell(sum(sum(media~=0)),1);
 indice = 1;
 for i=1:size(classes_all,1)
@@ -99,6 +100,8 @@ for i=1:size(classes_all,1)
             dados(indice,5) = freq_central(i,j);
             dados(indice,6) = largura_banda(i,j);
             dados(indice,7) = freq_margem(i,j);
+            crackle_wheeze(indice,1) = outtxt{i}(j,3);
+            crackle_wheeze(indice,2) = outtxt{i}(j,4);
             indice = indice+1;
             j = j+1;
         else
@@ -130,4 +133,4 @@ for m=1:numel(aux)
            classes(m) = 8;  %Bronchiolitis
     end
 end
-clear aux m
+clear aux m outtxt
