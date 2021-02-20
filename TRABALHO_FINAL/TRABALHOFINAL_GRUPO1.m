@@ -80,6 +80,7 @@ end
 delete(w);
 clear i j w ciclos fs
 
+
 % % ORGANIZANDO DADOS
 w = waitbar(0,'Organizando dados');
 dados = zeros(sum(sum(media~=0)),7);
