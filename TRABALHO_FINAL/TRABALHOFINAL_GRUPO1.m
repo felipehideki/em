@@ -82,15 +82,15 @@ clear i j w ciclos fs
 
 % % ORGANIZANDO DADOS
 w = waitbar(0,'Organizando dados');
-classes = table;
 dados = zeros(sum(sum(media~=0)),7);
+aux = cell(sum(sum(media~=0)),1);
 indice = 1;
 for i=1:size(classes_all,1)
     waitbar(i/size(classes_all,1));
     j = 1;
     while j<34
         if media(i,j)~=0
-            classes.Var1(indice,1) = classes_all.Var1(i);
+            aux{indice,1} = classes_all.Var1(i);
             dados(indice,1) = media(i,j);
             dados(indice,2) = variancia(i,j);
             dados(indice,3) = mobilidade(i,j);
@@ -107,3 +107,26 @@ for i=1:size(classes_all,1)
 end
 delete(w);
 clear classes_all media variancia mobilidade complexidade freq_central largura_banda freq_margem indice i j w
+
+classes = zeros(numel(aux),1);
+for m=1:numel(aux)
+    switch num2str(ismember({'URTI','Healthy','Asthma','COPD','LRTI','Bronchiectasis','Pneumonia','Bronchiolitis'},aux{m}))
+       case '1  0  0  0  0  0  0  0'
+           classes(m) = 1;  %URTI
+       case '0  1  0  0  0  0  0  0'
+           classes(m) = 2;  %Healthy
+       case '0  0  1  0  0  0  0  0'
+           classes(m) = 3;  %Asthma
+       case '0  0  0  1  0  0  0  0'
+           classes(m) = 4;  %COPD
+       case '0  0  0  0  1  0  0  0'
+           classes(m) = 5;  %LRTI
+       case '0  0  0  0  0  1  0  0'
+           classes(m) = 6;  %Bronchiectasis
+       case '0  0  0  0  0  0  1  0'
+           classes(m) = 7;  %Pneumonia
+       case '0  0  0  0  0  0  0  1'
+           classes(m) = 8;  %Bronchiolitis
+    end
+end
+clear aux m
