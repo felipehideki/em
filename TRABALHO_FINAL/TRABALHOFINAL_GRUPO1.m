@@ -7,7 +7,7 @@
 
 
 % % EXTRAINDO INÍCIO E FINAL DOS CICLOS RESPIRATÓRIOS EM CADA GRAVAÇÃO
-pathname = 'C:\Users\f8\Desktop\EngenhariaMedica\TRABALHOFINAL\Respiratory_Sound_Database\Respiratory_Sound_Database\audio_and_txt_files';
+pathname = 'C:\Users\$USER$\Desktop\EngenhariaMedica\TRABALHOFINAL\Respiratory_Sound_Database\Respiratory_Sound_Database\audio_and_txt_files';
 
 S = dir(fullfile(pathname,'*.txt'));
 outtxt = cell(size(S));
@@ -41,15 +41,15 @@ end
 delete(w);
 clear dados filename filepath i k w outtxt
 
-T = readtable('C:\Users\f8\Desktop\EngenhariaMedica\TRABALHOFINAL\Respiratory_Sound_Database\Respiratory_Sound_Database\patient_diagnosis.csv');
+T = readtable('C:\Users\$USER$\Desktop\EngenhariaMedica\TRABALHOFINAL\Respiratory_Sound_Database\Respiratory_Sound_Database\patient_diagnosis.csv');
 w = waitbar(0,'Relacionando classes');
-classes = table;
+classes_all = table;
 for j = 1:size(S)
     waitbar(j/numel(S));
     id = S(j).name;
     for m = 1:size(T,1)
         if sum(id(1:3)==num2str(T.Var1(m)))==3
-            classes.Var1(j,1) = T.Var2(m);
+            classes_all.Var1(j,1) = T.Var2(m);
         end
     end
 end
@@ -61,9 +61,10 @@ clear id j m pathname S T w
 media = zeros(size(ciclos));
 variancia = zeros(size(ciclos));
 mobilidade = zeros(size(ciclos));
-complex_estatistica = zeros(size(ciclos));
+complexidade = zeros(size(ciclos));
 freq_central = zeros(size(ciclos));
 largura_banda = zeros(size(ciclos));
+freq_margem = zeros(size(ciclos));
 
 w = waitbar(0,'Extraindo características');
 for i=1:size(ciclos,1)
@@ -72,9 +73,37 @@ for i=1:size(ciclos,1)
         if isempty(ciclos{i,j})
             break;
         else
-            [media(i,j),variancia(i,j),mobilidade(i,j),complex_estatistica(i,j),freq_central(i,j),largura_banda(i,j)] = PRINCIPAIS_CARACTERISTICAS(ciclos{i,j}',fs(i));
+            [media(i,j),variancia(i,j),mobilidade(i,j),complexidade(i,j),freq_central(i,j),largura_banda(i,j),freq_margem(i,j)] = PRINCIPAIS_CARACTERISTICAS(ciclos{i,j}',fs(i));
         end
     end
 end
 delete(w);
-clear i j w
+clear i j w ciclos fs
+
+% % ORGANIZANDO DADOS
+w = waitbar(0,'Organizando dados');
+classes = table;
+dados = zeros(sum(sum(media~=0)),7);
+indice = 1;
+for i=1:size(classes_all,1)
+    waitbar(i/size(classes_all,1));
+    j = 1;
+    while j<34
+        if media(i,j)~=0
+            classes.Var1(indice,1) = classes_all.Var1(i);
+            dados(indice,1) = media(i,j);
+            dados(indice,2) = variancia(i,j);
+            dados(indice,3) = mobilidade(i,j);
+            dados(indice,4) = complexidade(i,j);
+            dados(indice,5) = freq_central(i,j);
+            dados(indice,6) = largura_banda(i,j);
+            dados(indice,7) = freq_margem(i,j);
+            indice = indice+1;
+            j = j+1;
+        else
+            break;
+        end
+    end
+end
+delete(w);
+clear classes_all media variancia mobilidade complexidade freq_central largura_banda freq_margem indice i j w
