@@ -12,7 +12,7 @@ function [media,variancia,mobilidade,complex_estatistica,freq_central,largura_ba
     %%  VARIÂNCIA
     variancia(trecho) = var(SINAL(trecho,:));
     
-    %%  MOBILIDADE ESTAT�?STICA
+    %%  MOBILIDADE ESTATÍSTICA
     media_dif1 = 0;
     var_dif1 = 0;
     for (i=1:tamanho_sinal-1)
@@ -22,7 +22,7 @@ function [media,variancia,mobilidade,complex_estatistica,freq_central,largura_ba
     end
     mobilidade(trecho) = var_dif1/variancia(trecho);
       
-    %%  COMPLEXIDADE ESTAT�STICA
+    %%  COMPLEXIDADE ESTATÍSTICA
     media_dif2 = 0;
     var_dif2 = 0;
     for (i=1:tamanho_sinal-2)
@@ -40,7 +40,7 @@ function [media,variancia,mobilidade,complex_estatistica,freq_central,largura_ba
     %%xlim([0 FREQ_AMOSTRAGEM/2]);
     freq_central(trecho) = 0;
     for (i=1:tamanho_sinal/2)
-      freq_central(trecho) = freq_central(trecho) + (fshift(i)*(-1)*potencia(trecho,i)/soma_pot);  %fshift*(-1) pois começa da parte negativa do deslocamento
+      freq_central(trecho) = freq_central(trecho) + (fshift(i)*(-1)*potencia(trecho,i)/soma_pot);  %fshift*(-1) pois comeÃ§a da parte negativa do deslocamento
     end
     
     %%  LARGURA DE BANDA
@@ -54,13 +54,13 @@ function [media,variancia,mobilidade,complex_estatistica,freq_central,largura_ba
 %     beta = 0;
 %     gama = 0;
     for (i=1:tamanho_sinal/2)
-      ILB_prov = ILB_prov + (((fshift(i)*(-1))-freq_central(trecho))^2)*potencia(trecho,i);  %fshift*(-1) pois começa da parte negativa do deslocamento
+      ILB_prov = ILB_prov + (((fshift(i)*(-1))-freq_central(trecho))^2)*potencia(trecho,i);  %fshift*(-1) pois comeÃ§a da parte negativa do deslocamento
 %       
 %       %%  FREQUÊNCIA DE MARGEM
-%       if (fw<0.9)
-%         fw = fw + potencia(trecho,1501-i)/soma_pot;
-%         freq_margem(trecho) = fshift(1501-i)*(-1);
-%       end
+      if (fw<0.9)
+        fw = fw + potencia(trecho,floor(tamanho_sinal/2)+1-i)/soma_pot;
+        freq_margem(trecho) = fshift(floor(tamanho_sinal/2)+1-i)*(-1);
+      end
 %     
 %       %%  POTÊNCIA ESPECTRAL NORMALIZADA EM BANDAS  
 %       %  d1(0.5~2.5Hz), d2(2.5~4 Hz), t1(4~6Hz), t2(6~8Hz), a(8~12Hz), b(12~20 Hz) e g(20~45Hz)
