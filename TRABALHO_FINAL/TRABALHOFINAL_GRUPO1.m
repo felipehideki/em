@@ -8,7 +8,7 @@
 %------------------ PARTE 1: EXTRAÇÃO DE CARACTERÍSTICAS ----------------------------
 
 % % EXTRAINDO INÍCIO E FINAL DOS CICLOS RESPIRATÓRIOS EM CADA GRAVAÇÃO
-pathname = 'C:\Users\f8\Desktop\EngenhariaMedica\TRABALHOFINAL\Respiratory_Sound_Database\Respiratory_Sound_Database\audio_and_txt_files';
+pathname = 'C:\Users\%USER%\Desktop\EngenhariaMedica\TRABALHOFINAL\Respiratory_Sound_Database\Respiratory_Sound_Database\audio_and_txt_files';
 
 S = dir(fullfile(pathname,'*.txt'));
 outtxt = cell(size(S));
@@ -43,7 +43,7 @@ end
 delete(w);
 clear dados filename filepath i k w
 
-T = readtable('C:\Users\f8\Desktop\EngenhariaMedica\TRABALHOFINAL\Respiratory_Sound_Database\Respiratory_Sound_Database\patient_diagnosis.csv');
+T = readtable('C:\Users\%USER%\Desktop\EngenhariaMedica\TRABALHOFINAL\Respiratory_Sound_Database\Respiratory_Sound_Database\patient_diagnosis.csv');
 w = waitbar(0,'Relacionando classes');
 classes_all = table;
 for j = 1:size(S)
