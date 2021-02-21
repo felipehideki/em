@@ -1,4 +1,4 @@
-function [wp,i] = POCKET(xClasse1,xClasse2,max_iteracoes,rho)
+function [wp,i,erro] = POCKET(xClasse1,xClasse2,max_iteracoes,rho)
 
 %   FUNÇÃO:
 %           [wp,i] = POCKET(xClasse1,xClasse2,max_iteracoes,rho)
@@ -6,8 +6,8 @@ function [wp,i] = POCKET(xClasse1,xClasse2,max_iteracoes,rho)
 %   Essa função implementa o algoritmo para o perceptron pocket.
 %
 %   INPUT:
-%           xClasse1: matriz de dados da classe1, características x padrões
-%           xClasse2: matriz de dados da classe2, características x padrões
+%           xClasse1: matriz de dados da classe1, padrões x características
+%           xClasse2: matriz de dados da classe2, padrões x características
 %           max_iteracoes: número máximo de iterações
 %           p: parâmetro de aprendizagem do classificador
 %   OUTPUT:
@@ -15,14 +15,15 @@ function [wp,i] = POCKET(xClasse1,xClasse2,max_iteracoes,rho)
 %           i: número de iterações realizadas para convergência
 
     tic;
-    nx = size(xClasse1,1); % número de características de x
-    indice1 = 1:nx; % índices dos elementos da 1ªmetade (classe-1)
-    indice2 = (nx+1):(2*nx); % índices dos elementos da 2ªmetade (classe+1)
-    classes = [-ones(nx,1); ones(nx,1)];
+    nx1 = size(xClasse1,1); % número de padrões de x1
+    nx2 = size(xClasse2,1); % número de padrões de x2
+    indice1 = 1:nx1; % índices dos elementos da 1ªmetade (classe-1)
+    indice2 = (nx1+1):(nx1+nx2); % índices dos elementos da 2ªmetade (classe+1)
+    classes = [-ones(nx1,1); ones(nx2,1)];
     
     y = [xClasse1;xClasse2];
     y = [y, ones(size(y,1),1)]; % vetor com L+1 dimensões
-    N = size(y,1); % número de características de y (2 x nx)
+    N = size(y,1); % número de padrões de y (nx1+nx2)
     L1 = size(y,2); % número de dimensões de y (L+1)
     
     wi = randn(size(y,2),1); % primeiro vetor de pesos (w0), randomizado
@@ -33,10 +34,10 @@ function [wp,i] = POCKET(xClasse1,xClasse2,max_iteracoes,rho)
     while(1)
         pk = y*wi;
         % Para este algoritmo, define-se que
-        % se p com índice k de 1 até N/2 ("primeira metade"):
+        % se p com índice k de 1 até nx1 ("primeira metade"):
         %   é positivo: está classificado incorretamente
         %   é negativo: está classificado corretamente
-        % se p com índice k de (N/2)+1 até N ("segunda metade"):
+        % se p com índice k de nx1+1 até nx1+nx2 ("segunda metade"):
         %   é positivo: está classificado corretamente
         %   é negativo: está classificado incorretamente
         % ou vice-versa, invertendo as duas metades só resulta numa
@@ -69,7 +70,7 @@ function [wp,i] = POCKET(xClasse1,xClasse2,max_iteracoes,rho)
         end
         wi = wi_new;
         i = i+1;
-        erro = numel(indicesYe)/size(y,1);
+        erro = numel(indicesYe);%/size(y,1);
         if i>max_iteracoes | isempty(indicesYe)
             i = i-1;
             switch size(y,2)
