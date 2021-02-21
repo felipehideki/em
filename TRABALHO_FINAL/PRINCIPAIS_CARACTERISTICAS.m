@@ -5,13 +5,13 @@ function [media,variancia,mobilidade,complex_estatistica,freq_central,largura_ba
   tamanho_sinal = size(SINAL,2);
   fshift = (-tamanho_sinal/2:tamanho_sinal/2-1)*(FREQ_AMOSTRAGEM/tamanho_sinal);
   
-  media = zeros(qtd_trechos);
-  variancia = zeros(qtd_trechos);
-  mobilidade = zeros(qtd_trechos);
-  complex_estatistica = zeros(qtd_trechos);
-  freq_central = zeros(qtd_trechos);
-  largura_banda = zeros(qtd_trechos);
-  freq_margem = zeros(qtd_trechos);
+  media = zeros(qtd_trechos,1);
+  variancia = zeros(qtd_trechos,1);
+  mobilidade = zeros(qtd_trechos,1);
+  complex_estatistica = zeros(qtd_trechos,1);
+  freq_central = zeros(qtd_trechos,1);
+  largura_banda = zeros(qtd_trechos,1);
+  freq_margem = zeros(qtd_trechos,1);
   
   for (trecho=1:qtd_trechos)
     %%  MÉDIA
