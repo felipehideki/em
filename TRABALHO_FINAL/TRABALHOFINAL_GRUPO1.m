@@ -5,9 +5,10 @@
 % % AUSCULTAÇÕES TORÁXICAS
 
 
+%------------------ PARTE 1: EXTRAÇÃO DE CARACTERÍSTICAS ----------------------------
 
 % % EXTRAINDO INÍCIO E FINAL DOS CICLOS RESPIRATÓRIOS EM CADA GRAVAÇÃO
-pathname = 'C:\Users\$USER$\Desktop\EngenhariaMedica\TRABALHOFINAL\Respiratory_Sound_Database\Respiratory_Sound_Database\audio_and_txt_files';
+pathname = 'C:\Users\f8\Desktop\EngenhariaMedica\TRABALHOFINAL\Respiratory_Sound_Database\Respiratory_Sound_Database\audio_and_txt_files';
 
 S = dir(fullfile(pathname,'*.txt'));
 outtxt = cell(size(S));
@@ -42,7 +43,7 @@ end
 delete(w);
 clear dados filename filepath i k w
 
-T = readtable('C:\Users\$USER$\Desktop\EngenhariaMedica\TRABALHOFINAL\Respiratory_Sound_Database\Respiratory_Sound_Database\patient_diagnosis.csv');
+T = readtable('C:\Users\f8\Desktop\EngenhariaMedica\TRABALHOFINAL\Respiratory_Sound_Database\Respiratory_Sound_Database\patient_diagnosis.csv');
 w = waitbar(0,'Relacionando classes');
 classes_all = table;
 for j = 1:size(S)
@@ -66,6 +67,13 @@ complexidade = zeros(size(ciclos));
 freq_central = zeros(size(ciclos));
 largura_banda = zeros(size(ciclos));
 freq_margem = zeros(size(ciclos));
+assimetria = zeros(size(ciclos));
+curtose = zeros(size(ciclos));
+entropia = zeros(size(ciclos));
+% achatamento = zeros(size(ciclos));
+inclinacao = zeros(size(ciclos));
+crista = zeros(size(ciclos));
+reducao = zeros(size(ciclos));
 
 w = waitbar(0,'Extraindo características');
 for i=1:size(ciclos,1)
@@ -74,7 +82,9 @@ for i=1:size(ciclos,1)
         if isempty(ciclos{i,j})
             break;
         else
-            [media(i,j),variancia(i,j),mobilidade(i,j),complexidade(i,j),freq_central(i,j),largura_banda(i,j),freq_margem(i,j)] = PRINCIPAIS_CARACTERISTICAS(ciclos{i,j}',fs(i));
+            [media(i,j),variancia(i,j),mobilidade(i,j),complexidade(i,j),freq_central(i,j),...
+                largura_banda(i,j),freq_margem(i,j),assimetria(i,j),curtose(i,j),...
+                entropia(i,j),inclinacao(i,j),crista(i,j),reducao(i,j)] = PRINCIPAIS_CARACTERISTICAS(ciclos{i,j}',fs(i));
         end
     end
 end
@@ -83,14 +93,14 @@ clear i j w ciclos fs
 
 % % ORGANIZANDO DADOS
 w = waitbar(0,'Organizando dados');
-dados = zeros(sum(sum(media~=0)),7);
+dados = zeros(sum(sum(media~=0)),13);
 crackle_wheeze = zeros(sum(sum(media~=0)),2);
 aux = cell(sum(sum(media~=0)),1);
 indice = 1;
 for i=1:size(classes_all,1)
     waitbar(i/size(classes_all,1));
     j = 1;
-    while j<34
+    while j<=size(media,2)
         if media(i,j)~=0
             aux{indice,1} = classes_all.Var1(i);
             dados(indice,1) = media(i,j);
@@ -100,6 +110,12 @@ for i=1:size(classes_all,1)
             dados(indice,5) = freq_central(i,j);
             dados(indice,6) = largura_banda(i,j);
             dados(indice,7) = freq_margem(i,j);
+            dados(indice,8) = assimetria(i,j);
+            dados(indice,9) = curtose(i,j);
+            dados(indice,10) = entropia(i,j);
+            dados(indice,11) = inclinacao(i,j);
+            dados(indice,12) = crista(i,j);
+            dados(indice,13) = reducao(i,j);
             crackle_wheeze(indice,1) = outtxt{i}(j,3);
             crackle_wheeze(indice,2) = outtxt{i}(j,4);
             indice = indice+1;
