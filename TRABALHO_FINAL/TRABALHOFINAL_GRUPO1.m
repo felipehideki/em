@@ -149,4 +149,6 @@ for m=1:numel(aux)
            classes(m) = 8;  %Bronchiolitis
     end
 end
-clear aux m outtxt
+clear classes_all media variancia mobilidade complexidade ...
+    freq_central largura_banda freq_margem assimetria crista curtose entropia...
+    inclinacao reducao indice i j w
