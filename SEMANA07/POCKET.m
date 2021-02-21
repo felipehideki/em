@@ -70,7 +70,7 @@ function [wp,i,erro] = POCKET(xClasse1,xClasse2,max_iteracoes,rho)
         end
         wi = wi_new;
         i = i+1;
-        erro = numel(indicesYe);%/size(y,1);
+        erro = numel(indicesYe)/size(y,1);
         if i>max_iteracoes | isempty(indicesYe)
             i = i-1;
             switch size(y,2)
