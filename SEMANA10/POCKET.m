@@ -1,29 +1,30 @@
-function [wp,i] = POCKET(xClasse1,xClasse2,max_iteracoes,rho)
+function [wp,i,erro] = POCKET(xClasse1,xClasse2,max_iteracoes,rho)
 
-%   FUN«√O:
+%   FUN√á√ÉO:
 %           [wp,i] = POCKET(xClasse1,xClasse2,max_iteracoes,rho)
 %
-%   Essa funÁ„o implementa o algoritmo para o perceptron pocket.
+%   Essa fun√ß√£o implementa o algoritmo para o perceptron pocket.
 %
 %   INPUT:
-%           xClasse1: matriz de dados da classe1, caracterÌsticas x padrıes
-%           xClasse2: matriz de dados da classe2, caracterÌsticas x padrıes
-%           max_iteracoes: n˙mero m·ximo de iteraÁıes
-%           p: par‚metro de aprendizagem do classificador
+%           xClasse1: matriz de dados da classe1, padr√µes x caracter√≠sticas
+%           xClasse2: matriz de dados da classe2, padr√µes x caracter√≠sticas
+%           max_iteracoes: n√∫mero m√°ximo de itera√ß√µes
+%           p: par√¢metro de aprendizagem do classificador
 %   OUTPUT:
 %           wp: vetor de pesos pocket
-%           i: n˙mero de iteraÁıes realizadas para convergÍncia
+%           i: n√∫mero de itera√ß√µes realizadas para converg√™ncia
 
     tic;
-    nx = size(xClasse1,1); % n˙mero de caracterÌsticas de x
-    indice1 = 1:nx; % Ìndices dos elementos da 1™metade (classe-1)
-    indice2 = (nx+1):(2*nx); % Ìndices dos elementos da 2™metade (classe+1)
-    classes = [-ones(nx,1); ones(nx,1)];
+    nx1 = size(xClasse1,1); % n√∫mero de padr√µes de x1
+    nx2 = size(xClasse2,1); % n√∫mero de padr√µes de x2
+    indice1 = 1:nx1; % √≠ndices dos elementos da 1¬™metade (classe-1)
+    indice2 = (nx1+1):(nx1+nx2); % √≠ndices dos elementos da 2¬™metade (classe+1)
+    classes = [-ones(nx1,1); ones(nx2,1)];
     
     y = [xClasse1;xClasse2];
-    y = [y, ones(size(y,1),1)]; % vetor com L+1 dimensıes
-    N = size(y,1); % n˙mero de caracterÌsticas de y (2 x nx)
-    L1 = size(y,2); % n˙mero de dimensıes de y (L+1)
+    y = [y, ones(size(y,1),1)]; % vetor com L+1 dimens√µes
+    N = size(y,1); % n√∫mero de padr√µes de y (nx1+nx2)
+    L1 = size(y,2); % n√∫mero de dimens√µes de y (L+1)
     
     wi = randn(size(y,2),1); % primeiro vetor de pesos (w0), randomizado
     wp = wi; % guardando w0 no pocket (wp)
@@ -33,22 +34,22 @@ function [wp,i] = POCKET(xClasse1,xClasse2,max_iteracoes,rho)
     while(1)
         pk = y*wi;
         % Para este algoritmo, define-se que
-        % se p com Ìndice k de 1 atÈ N/2 ("primeira metade"):
-        %   È positivo: est· classificado incorretamente
-        %   È negativo: est· classificado corretamente
-        % se p com Ìndice k de (N/2)+1 atÈ N ("segunda metade"):
-        %   È positivo: est· classificado corretamente
-        %   È negativo: est· classificado incorretamente
-        % ou vice-versa, invertendo as duas metades sÛ resulta numa
-        % classificaÁ„o invertida (classe1->classe2, classe2->classe1)
+        % se p com √≠ndice k de 1 at√© nx1 ("primeira metade"):
+        %   √© positivo: est√° classificado incorretamente
+        %   √© negativo: est√° classificado corretamente
+        % se p com √≠ndice k de nx1+1 at√© nx1+nx2 ("segunda metade"):
+        %   √© positivo: est√° classificado corretamente
+        %   √© negativo: est√° classificado incorretamente
+        % ou vice-versa, invertendo as duas metades s√≥ resulta numa
+        % classifica√ß√£o invertida (classe1->classe2, classe2->classe1)
         
-        % ent„o, para facilitar a busca das classificaÁıes incorretas,
+        % ent√£o, para facilitar a busca das classifica√ß√µes incorretas,
         % basta inverter o sinal de pk para uma das metades. Ou seja, 
-        % selecionar todos os pk incorretos ser· selecionar todos os pk de 
+        % selecionar todos os pk incorretos ser√° selecionar todos os pk de 
         % mesmo sinal para ambas as metades.
         
         pk(indice1) = -pk(indice1); % invertendo sinal da primeira metade
-        % agora basta buscar os pk negativos, que ser„o todos INCORRETOS,
+        % agora basta buscar os pk negativos, que ser√£o todos INCORRETOS,
         % independente da metade.
         indicesYe = find(pk<0);
         % calculando custo J(wi)
@@ -69,11 +70,11 @@ function [wp,i] = POCKET(xClasse1,xClasse2,max_iteracoes,rho)
         end
         wi = wi_new;
         i = i+1;
-        erro = numel(indicesYe)/size(y,1);
+        erro = numel(indicesYe);%/size(y,1);
         if i>max_iteracoes | isempty(indicesYe)
             i = i-1;
             switch size(y,2)
-                case 3 % L+1=3 (L = 2 dimensıes)
+                case 3 % L+1=3 (L = 2 dimens√µes)
                     c1 = plot(xClasse1(:,1),xClasse1(:,2),'.b'); 
                     hold on; 
                     c2 = plot(xClasse2(:,1),xClasse2(:,2),'.r');
@@ -82,9 +83,9 @@ function [wp,i] = POCKET(xClasse1,xClasse2,max_iteracoes,rho)
                     dominio = get(gca,'Xlim');
                     imagem = -(wp(3)+wp(1)*dominio)/wp(2); % reta w1x+w2y+w3=0
                     perceptron = plot(dominio,imagem,'-black');
-                    title({['\rho = ', num2str(rho,'%.2f'),', iteraÁıes: ', num2str(i)];['erro: ',num2str(erro)]});
+                    title({['\rho = ', num2str(rho,'%.2f'),', itera√ß√µes: ', num2str(i)];['erro: ',num2str(erro)]});
                     legend([c1,c2,perceptron], {'classe 1','classe 2','perceptron'});
-                case 4 % L+1=4 (L = 3 dimensıes)
+                case 4 % L+1=4 (L = 3 dimens√µes)
                     c1 = plot3(xClasse1(:,1),xClasse1(:,2),xClasse1(:,3),'.b'); 
                     hold on; 
                     c2 = plot3(xClasse2(:,1),xClasse2(:,2),xClasse2(:,3),'.r');
@@ -93,7 +94,7 @@ function [wp,i] = POCKET(xClasse1,xClasse2,max_iteracoes,rho)
                     z = -((wp(1)*x)+(wp(2)*y)+wp(4))/wp(3); % plano w1x+w2y+w3z+w4=0
                     perceptron = surf(x,y,z,ones(size(x)));
                     perceptron.EdgeColor = 'none';
-                    title({['\rho = ', num2str(rho,'%.2f'),', iteraÁıes: ', num2str(i)];['erro: ',num2str(erro)]});
+                    title({['\rho = ', num2str(rho,'%.2f'),', itera√ß√µes: ', num2str(i)];['erro: ',num2str(erro)]});
                     legend([c1,c2,perceptron], {'classe 1','classe 2','perceptron'});
             end
             toc;
