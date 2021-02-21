@@ -51,7 +51,7 @@ function [media,variancia,mobilidade,complex_estatistica,freq_central,largura_ba
       freq_central(trecho) = freq_central(trecho) + (fshift(i)*(-1)*potencia(trecho,i)/soma_pot);  %fshift*(-1) pois comeÃ§a da parte negativa do deslocamento
     end
     
-    %%  LARGURA DE BANDA
+    % %  LARGURA DE BANDA
     ILB_prov = 0;
     fw = 0;
     for (i=1:tamanho_sinal/2)
