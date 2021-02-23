@@ -72,30 +72,6 @@ function [media,variancia,mobilidade,complex_estatistica,freq_central,largura_ba
                 fw = fw + potencia(trecho,floor(tamanho_sinal/2)+1-i)/soma_pot;
                 freq_margem(trecho) = fshift(floor(tamanho_sinal/2)+1-i)*(-1);
             end
-            
-        %       %%  POTÊNCIA ESPECTRAL NORMALIZADA EM BANDAS  
-        %       %  d1(0.5~2.5Hz), d2(2.5~4 Hz), t1(4~6Hz), t2(6~8Hz), a(8~12Hz), b(12~20 Hz) e g(20~45Hz)
-        %       if ((fshift(i)*(-1))>20 && (fshift(i)*(-1))<45)
-        %         gama = gama + potencia(trecho,i);
-        %       end
-        %       if ((fshift(i)*(-1))>12 && (fshift(i)*(-1))<20)
-        %         beta = beta + potencia(trecho,i);
-        %       end
-        %       if ((fshift(i)*(-1))>8 && (fshift(i)*(-1))<12)
-        %         alfa = alfa + potencia(trecho,i);
-        %       end
-        %       if ((fshift(i)*(-1))>6 && (fshift(i)*(-1))<8)
-        %         teta2 = teta2 + potencia(trecho,i);
-        %       end
-        %       if ((fshift(i)*(-1))>4 && (fshift(i)*(-1))<6)
-        %         teta1 = teta1 + potencia(trecho,i);
-        %       end
-        %       if ((fshift(i)*(-1))>2.5 && (fshift(i)*(-1))<4)
-        %         delta2 = delta2 + potencia(trecho,i);
-        %       end
-        %       if ((fshift(i)*(-1))>0.5 && (fshift(i)*(-1))<2.5)
-        %         delta1 = delta1 + potencia(trecho,i);
-        %       end
         
             %%  ASSIMETRIA (SKEWNESS)
             assimetria(trecho) = assimetria(trecho) + (((fshift(i)*(-1))-freq_central(trecho))^3)*potencia(trecho,i);
@@ -113,13 +89,7 @@ function [media,variancia,mobilidade,complex_estatistica,freq_central,largura_ba
             inclinacao(trecho) = inclinacao(trecho) + ((fshift(i)*(-1))-uf)*(potencia(trecho,i)-us);
             denominador = denominador + ((fshift(i)*(-1))-uf)^2;
         end
-%         pot_espect_norm(trecho,1) = delta1/soma_pot;
-%         pot_espect_norm(trecho,2) = delta2/soma_pot;
-%         pot_espect_norm(trecho,3) = teta1/soma_pot;
-%         pot_espect_norm(trecho,4) = teta2/soma_pot;
-%         pot_espect_norm(trecho,5) = alfa/soma_pot;
-%         pot_espect_norm(trecho,6) = beta/soma_pot;
-%         pot_espect_norm(trecho,7) = gama/soma_pot;
+
         largura_banda(trecho) = sqrt(ILB_prov/soma_pot);
         assimetria(trecho) = assimetria(trecho)/((largura_banda(trecho)^3)*soma_pot);
         curtose(trecho) = curtose(trecho)/((largura_banda(trecho)^4)*soma_pot);
@@ -138,3 +108,4 @@ function [media,variancia,mobilidade,complex_estatistica,freq_central,largura_ba
         end
         reducao(trecho) = reducao(trecho)/denominador;
     end
+end
