@@ -135,9 +135,11 @@ delete(w);
 clear classes_all media variancia mobilidade complexidade ...
     freq_central largura_banda freq_margem assimetria crista curtose entropia...
     inclinacao reducao indice i j w
-
+    
+w = waitbar(0,'Organizando classes');
 classes = zeros(numel(aux),1);
 for m=1:numel(aux)
+    waitbar(m/numel(aux));
     switch num2str(ismember({'Healthy','Asthma','COPD','URTI','LRTI','Bronchiectasis','Bronchiolitis','Pneumonia'},aux{m}))
        case '1  0  0  0  0  0  0  0'
            classes(m) = 1;  %Healthy
@@ -157,4 +159,5 @@ for m=1:numel(aux)
            classes(m) = 8;  %Pneumonia
     end
 end
-clear aux m outtxt
+delete(w);
+clear aux m outtxt w
