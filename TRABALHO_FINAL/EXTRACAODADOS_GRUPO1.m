@@ -1,14 +1,13 @@
 % % TRABALHO FINAL DE ENGENHARIA MÉDICA 2S/2020
-% % GRUPO 1
+% % GRUPO 1: FELIPE HIDEKI HATANO & PEDRO ROCHA SANTOS
 
 % % CLASSIFICAÇÃO DE INDIVÍDUOS SAUDÁVEIS/DOENTES DE UM BANCO DE DADOS DE
 % % AUSCULTAÇÕES TORÁXICAS
 
 
-%------------------ PARTE 1: EXTRAÇÃO DE CARACTERÍSTICAS ----------------------------
-
 % % EXTRAINDO INÍCIO E FINAL DOS CICLOS RESPIRATÓRIOS EM CADA GRAVAÇÃO
-pathname = 'C:\Users\%USER%\Desktop\EngenhariaMedica\TRABALHOFINAL\Respiratory_Sound_Database\Respiratory_Sound_Database\audio_and_txt_files';
+pathname = 'C:\Users\f8\Desktop\EngenhariaMedica\TRABALHOFINAL\Respiratory_Sound_Database\Respiratory_Sound_Database\audio_and_txt_files';
+T = readtable('C:\Users\f8\Desktop\EngenhariaMedica\TRABALHOFINAL\Respiratory_Sound_Database\Respiratory_Sound_Database\patient_diagnosis.csv');
 
 S = dir(fullfile(pathname,'*.txt'));
 outtxt = cell(size(S));
@@ -43,7 +42,6 @@ end
 delete(w);
 clear dados filename filepath i k w
 
-T = readtable('C:\Users\%USER%\Desktop\EngenhariaMedica\TRABALHOFINAL\Respiratory_Sound_Database\Respiratory_Sound_Database\patient_diagnosis.csv');
 w = waitbar(0,'Relacionando classes');
 classes_all = table;
 for j = 1:size(S)
@@ -91,6 +89,7 @@ end
 delete(w);
 clear i j w ciclos fs
 
+
 % % ORGANIZANDO DADOS
 w = waitbar(0,'Organizando dados');
 dados = zeros(sum(sum(media~=0)),13);
@@ -126,29 +125,29 @@ for i=1:size(classes_all,1)
     end
 end
 delete(w);
-clear classes_all media variancia mobilidade complexidade freq_central largura_banda freq_margem indice i j w
+clear classes_all media variancia mobilidade complexidade ...
+    freq_central largura_banda freq_margem assimetria crista curtose entropia...
+    inclinacao reducao indice i j w
 
 classes = zeros(numel(aux),1);
 for m=1:numel(aux)
-    switch num2str(ismember({'URTI','Healthy','Asthma','COPD','LRTI','Bronchiectasis','Pneumonia','Bronchiolitis'},aux{m}))
+    switch num2str(ismember({'Healthy','Asthma','COPD','URTI','LRTI','Bronchiectasis','Bronchiolitis','Pneumonia'},aux{m}))
        case '1  0  0  0  0  0  0  0'
-           classes(m) = 1;  %URTI
+           classes(m) = 1;  %Healthy
        case '0  1  0  0  0  0  0  0'
-           classes(m) = 2;  %Healthy
+           classes(m) = 2;  %Asthma
        case '0  0  1  0  0  0  0  0'
-           classes(m) = 3;  %Asthma
+           classes(m) = 3;  %COPD
        case '0  0  0  1  0  0  0  0'
-           classes(m) = 4;  %COPD
+           classes(m) = 4;  %URTI
        case '0  0  0  0  1  0  0  0'
            classes(m) = 5;  %LRTI
        case '0  0  0  0  0  1  0  0'
            classes(m) = 6;  %Bronchiectasis
        case '0  0  0  0  0  0  1  0'
-           classes(m) = 7;  %Pneumonia
+           classes(m) = 7;  %Bronchiolitis
        case '0  0  0  0  0  0  0  1'
-           classes(m) = 8;  %Bronchiolitis
+           classes(m) = 8;  %Pneumonia
     end
 end
-clear classes_all media variancia mobilidade complexidade ...
-    freq_central largura_banda freq_margem assimetria crista curtose entropia...
-    inclinacao reducao indice i j w
+clear aux m outtxt
