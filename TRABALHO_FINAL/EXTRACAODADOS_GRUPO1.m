@@ -5,7 +5,8 @@
 % % AUSCULTAÇÕES TORÁXICAS
 
 % % ---------------------------------------------------------------------
-% % SCRIPT PARA ORGANIZAÇÃO DOS DADOS E EXTRAÇÃO DE CARACTERÍSTICAS
+% % SCRIPT PARA ORGANIZAÇÃO E EXTRAÇÃO DE CARACTERÍSTICAS
+% % Resulta nos dados presentes no arquivo 'DADOS_GRUPO1.mat'
 % % ---------------------------------------------------------------------
 
 % % EXTRAINDO INÍCIO E FINAL DOS CICLOS RESPIRATÓRIOS EM CADA GRAVAÇÃO
