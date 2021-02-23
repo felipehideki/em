@@ -1,13 +1,20 @@
 % % TRABALHO FINAL DE ENGENHARIA MÉDICA 2S/2020
-% % GRUPO 1: FELIPE HIDEKI HATANO & PEDRO ROCHA SANTOS
+% % GRUPO 1
 
 % % CLASSIFICAÇÃO DE INDIVÍDUOS SAUDÁVEIS/DOENTES DE UM BANCO DE DADOS DE
 % % AUSCULTAÇÕES TORÁXICAS
 
+% % ---------------------------------------------------------------------
+% % SCRIPT PARA ORGANIZAÇÃO DOS DADOS E EXTRAÇÃO DE CARACTERÍSTICAS
+% % ---------------------------------------------------------------------
 
 % % EXTRAINDO INÍCIO E FINAL DOS CICLOS RESPIRATÓRIOS EM CADA GRAVAÇÃO
-pathname = 'C:\Users\f8\Desktop\EngenhariaMedica\TRABALHOFINAL\Respiratory_Sound_Database\Respiratory_Sound_Database\audio_and_txt_files';
-T = readtable('C:\Users\f8\Desktop\EngenhariaMedica\TRABALHOFINAL\Respiratory_Sound_Database\Respiratory_Sound_Database\patient_diagnosis.csv');
+
+% % CAMINHO PARA A PASTA DE DADOS (PASTA QUE CONTÉM OS ARQUIVOS .TXT E .WAV)
+pathname = 'C:\Users\$USER$\Desktop\Respiratory_Sound_Database\Respiratory_Sound_Database\audio_and_txt_files';
+
+% % CAMINHO PARA A TABELA DE DIAGNÓSTICOS (ARQUIVO .CSV)
+T = readtable('C:\Users\$USER$\Desktop\Respiratory_Sound_Database\Respiratory_Sound_Database\patient_diagnosis.csv');
 
 S = dir(fullfile(pathname,'*.txt'));
 outtxt = cell(size(S));
