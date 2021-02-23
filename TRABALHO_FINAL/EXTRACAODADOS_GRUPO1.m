@@ -1,15 +1,12 @@
 % % TRABALHO FINAL DE ENGENHARIA MÉDICA 2S/2020
 % % GRUPO 1
 
-% % CLASSIFICAÇÃO DE INDIVÍDUOS SAUDÁVEIS/DOENTES DE UM BANCO DE DADOS DE
-% % AUSCULTAÇÕES TORÁXICAS
+% % CLASSIFICAÇÃO DE INDIVÍDUOS SAUDÁVEIS/DOENTES DE UM BANCO DE DADOS DE AUSCULTAÇÕES TORÁXICAS
 
 % % ---------------------------------------------------------------------
 % % SCRIPT PARA ORGANIZAÇÃO E EXTRAÇÃO DE CARACTERÍSTICAS
 % % Resulta nos dados presentes no arquivo 'DADOS_GRUPO1.mat'
 % % ---------------------------------------------------------------------
-
-% % EXTRAINDO INÍCIO E FINAL DOS CICLOS RESPIRATÓRIOS EM CADA GRAVAÇÃO
 
 % % CAMINHO PARA A PASTA DE DADOS (PASTA QUE CONTÉM OS ARQUIVOS .TXT E .WAV)
 pathname = 'C:\Users\$USER$\Desktop\Respiratory_Sound_Database\Respiratory_Sound_Database\audio_and_txt_files';
@@ -17,6 +14,8 @@ pathname = 'C:\Users\$USER$\Desktop\Respiratory_Sound_Database\Respiratory_Sound
 % % CAMINHO PARA A TABELA DE DIAGNÓSTICOS (ARQUIVO .CSV)
 T = readtable('C:\Users\$USER$\Desktop\Respiratory_Sound_Database\Respiratory_Sound_Database\patient_diagnosis.csv');
 
+
+% % EXTRAINDO INÍCIO E FINAL DOS CICLOS RESPIRATÓRIOS EM CADA GRAVAÇÃO
 S = dir(fullfile(pathname,'*.txt'));
 outtxt = cell(size(S));
 w = waitbar(0,'Importando arquivos .txt');
@@ -64,7 +63,7 @@ end
 delete(w);
 clear id j m pathname S T w
             
-
+            
 % % EXTRAÇÃO DE CARACTERÍSTICAS PRINCIPAIS
 media = zeros(size(ciclos));
 variancia = zeros(size(ciclos));
