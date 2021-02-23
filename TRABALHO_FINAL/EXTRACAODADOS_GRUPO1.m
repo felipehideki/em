@@ -159,5 +159,7 @@ for m=1:numel(aux)
            classes(m) = 8;  %Pneumonia
     end
 end
+classe_diagnostico = table([1;2;3;4;5;6;7;8],{'Saudável';'Asma';'DPOC';'ITRS';'ITRI';'Bronquiectasia';'Bronquiolite';'Pneumonia'});
+classe_diagnostico.Properties.VariableNames = {'Classe' 'Diagnostico'};
 delete(w);
 clear aux m outtxt w
