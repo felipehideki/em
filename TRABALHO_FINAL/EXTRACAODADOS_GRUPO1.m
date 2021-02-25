@@ -1,7 +1,8 @@
 % % TRABALHO FINAL DE ENGENHARIA MÉDICA 2S/2020
 % % GRUPO 1
 
-% % CLASSIFICAÇÃO DE INDIVÍDUOS SAUDÁVEIS/DOENTES DE UM BANCO DE DADOS DE AUSCULTAÇÕES TORÁXICAS
+% % CLASSIFICAÇÃO DE INDIVÍDUOS SAUDÁVEIS/DOENTES DE UM BANCO DE DADOS DE
+% % AUSCULTAÇÕES TORÁXICAS
 
 % % ---------------------------------------------------------------------
 % % SCRIPT PARA ORGANIZAÇÃO E EXTRAÇÃO DE CARACTERÍSTICAS
@@ -9,11 +10,10 @@
 % % ---------------------------------------------------------------------
 
 % % CAMINHO PARA A PASTA DE DADOS (PASTA QUE CONTÉM OS ARQUIVOS .TXT E .WAV)
-pathname = 'C:\Users\$USER$\Desktop\Respiratory_Sound_Database\Respiratory_Sound_Database\audio_and_txt_files';
+pathname = 'C:\Users\$USER$\Desktop\EngenhariaMedica\TRABALHOFINAL\Respiratory_Sound_Database\Respiratory_Sound_Database\audio_and_txt_files';
 
 % % CAMINHO PARA A TABELA DE DIAGNÓSTICOS (ARQUIVO .CSV)
-T = readtable('C:\Users\$USER$\Desktop\Respiratory_Sound_Database\Respiratory_Sound_Database\patient_diagnosis.csv');
-
+T = readtable('C:\Users\$USER$\Desktop\EngenhariaMedica\TRABALHOFINAL\Respiratory_Sound_Database\Respiratory_Sound_Database\patient_diagnosis.csv');
 
 % % EXTRAINDO INÍCIO E FINAL DOS CICLOS RESPIRATÓRIOS EM CADA GRAVAÇÃO
 S = dir(fullfile(pathname,'*.txt'));
@@ -49,7 +49,7 @@ end
 delete(w);
 clear dados filename filepath i k w
 
-w = waitbar(0,'Relacionando classes');
+w = waitbar(0,'Relacionando diagnósticos');
 classes_all = table;
 for j = 1:size(S)
     waitbar(j/numel(S));
@@ -63,7 +63,7 @@ end
 delete(w);
 clear id j m pathname S T w
             
-            
+
 % % EXTRAÇÃO DE CARACTERÍSTICAS PRINCIPAIS
 media = zeros(size(ciclos));
 variancia = zeros(size(ciclos));
@@ -135,31 +135,31 @@ delete(w);
 clear classes_all media variancia mobilidade complexidade ...
     freq_central largura_banda freq_margem assimetria crista curtose entropia...
     inclinacao reducao indice i j w
-    
-w = waitbar(0,'Organizando classes');
-classes = zeros(numel(aux),1);
+
+w = waitbar(0,'Organizando numeração dos diagnósticos');
+numeracao = zeros(numel(aux),1);
 for m=1:numel(aux)
     waitbar(m/numel(aux));
     switch num2str(ismember({'Healthy','Asthma','COPD','URTI','LRTI','Bronchiectasis','Bronchiolitis','Pneumonia'},aux{m}))
        case '1  0  0  0  0  0  0  0'
-           classes(m) = 1;  %Healthy
+           numeracao(m) = 1;  %Healthy
        case '0  1  0  0  0  0  0  0'
-           classes(m) = 2;  %Asthma
+           numeracao(m) = 2;  %Asthma
        case '0  0  1  0  0  0  0  0'
-           classes(m) = 3;  %COPD
+           numeracao(m) = 3;  %COPD
        case '0  0  0  1  0  0  0  0'
-           classes(m) = 4;  %URTI
+           numeracao(m) = 4;  %URTI
        case '0  0  0  0  1  0  0  0'
-           classes(m) = 5;  %LRTI
+           numeracao(m) = 5;  %LRTI
        case '0  0  0  0  0  1  0  0'
-           classes(m) = 6;  %Bronchiectasis
+           numeracao(m) = 6;  %Bronchiectasis
        case '0  0  0  0  0  0  1  0'
-           classes(m) = 7;  %Bronchiolitis
+           numeracao(m) = 7;  %Bronchiolitis
        case '0  0  0  0  0  0  0  1'
-           classes(m) = 8;  %Pneumonia
+           numeracao(m) = 8;  %Pneumonia
     end
 end
-classe_diagnostico = table([1;2;3;4;5;6;7;8],{'Saudável';'Asma';'DPOC';'ITRS';'ITRI';'Bronquiectasia';'Bronquiolite';'Pneumonia'});
-classe_diagnostico.Properties.VariableNames = {'Classe' 'Diagnostico'};
+num_diagnostico = table([1;2;3;4;5;6;7;8],{'Saudável';'Asma';'DPOC';'ITRS';'ITRI';'Bronquiectasia';'Bronquiolite';'Pneumonia'});
+num_diagnostico.Properties.VariableNames = {'Numeracao' 'Diagnostico'};
 delete(w);
 clear aux m outtxt w
