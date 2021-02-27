@@ -328,5 +328,10 @@ for i=1:10
 end
 delete(wb); clear wb;
 
-clearvars -except erroPtrainingA erroPtrainingB erroSVMtrainingA erroSVMtrainingB...
-    erroPtestA erroPtestB erroSVMtestA erroSVMtestB
+erroP_training_testA = [erroPtrainingA erroPtestA];
+erroP_training_testB = [erroPtrainingB erroPtestB];
+erroSVM_training_testA = [erroSVMtrainingA erroSVMtestA];
+erroSVM_training_testB = [erroSVMtrainingB erroSVMtestB];
+
+clearvars -except erroP_training_testA erroP_training_testB erroSVM_training_testA erroSVM_training_testB
+
