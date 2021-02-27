@@ -1,11 +1,11 @@
-% % TRABALHO FINAL DE ENGENHARIA M…DICA 2S/2020
-% % GRUPO 1: FELIPE HIDEKI HATANO & PEDRO ROCHA FERRAZ SANTOS
+% % TRABALHO FINAL DE ENGENHARIA M√âDICA 2S/2020
+% % GRUPO 1
 
-% % CLASSIFICA«√O DE INDIVÕDUOS SAUD¡VEIS/DOENTES DE UM BANCO DE DADOS DE
-% % AUSCULTA«’ES PULMONARES
+% % CLASSIFICA√á√ÉO DE INDIV√çDUOS SAUD√ÅVEIS/DOENTES DE UM BANCO DE DADOS DE
+% % AUSCULTA√á√ïES PULMONARES
 
 % % ---------------------------------------------------------------------
-% % SCRIPT PARA CLASSIFICA«√O
+% % SCRIPT PARA CLASSIFICA√á√ÉO
 % %     Utiliza os dados contidos no arquivo "DADOS_GRUPO1.mat", criado
 % % com os resultados do script "EXTRACAODADOS_GRUPO1.m".
 % % ---------------------------------------------------------------------
@@ -13,7 +13,7 @@
 load('DADOS_GRUPO1.mat');
 rng('default');
 
-% % REMO«√O DE OUTLIERS
+% % REMO√á√ÉO DE OUTLIERS
 outliers = [];
 for i=1:size(dados,2)
     [~,indexes{i}] = semana4_remocaooutliers(dados(:,i));
@@ -28,7 +28,7 @@ crackle_wheeze(outliers,:) = []; % Para caso seja utilizado posteriormente
 clear i indexes outliers
 
 
-%%  CLASSIFICA«√O AGRUPAMENTO A: "SAUD¡VEIS x TODOS OS OUTROS"
+%%  CLASSIFICA√á√ÉO AGRUPAMENTO A: "SAUD√ÅVEIS x TODOS OS OUTROS"
 
 dx = diagnostico;
 dx(dx~=1) = 2;
@@ -38,14 +38,14 @@ dx(dx~=1) = 2;
 % [n,x] = hist(dx,2);
 % barstrings = num2str(n');
 % text(x,n,barstrings,'horizontalalignment','center','verticalalignment','bottom');
-% title('DistribuiÁ„o dos padrıes (1 = SAUD¡VEIS, 2 = N√O-SAUD¡VEIS)');
+% title('Distribui√ß√£o dos padr√µes (1 = SAUD√ÅVEIS, 2 = N√ÉO-SAUD√ÅVEIS)');
 % xlabel('classe');
-% ylabel('padrıes');
+% ylabel('padr√µes');
 % ax = gca;
 % ax.XTick = [1 2];
 % clear n x ax
 
-% % NORMALIZA«√O DOS DADOS
+% % NORMALIZA√á√ÉO DOS DADOS
 xClasse1 = dados(dx==1,:);
 xClasse2 = dados(dx==2,:);
 todas = [xClasse1;xClasse2];
@@ -59,8 +59,8 @@ doentes = padroes_norm(size(xClasse1,1)+1:end,:);
 
 % % PERCEPTRON POCKET PARA VERIFICAR SEPARABILIDADE LINEAR
 [~,~,erroPocketA] = POCKET(saudaveis,doentes,10000,0.1);
-% 0.05 de erro, mas >95% dos dados s„o da classe n„o-saud·vel...
-% N„o È separ·vel linearmente, o algoritmo n„o converge.
+% 0.05 de erro, mas >95% dos dados s√£o da classe n√£o-saud√°vel...
+% N√£o √© separ√°vel linearmente, o algoritmo n√£o converge.
 
 % % PCA
 erroPCA = 0;
@@ -72,23 +72,23 @@ end
 [~,~,matrizPCA] = KL(padroes_norm',i+1);
 clear i erroPCA;
 matrizPCA = matrizPCA';
-% EspaÁo reduzido para 9 dimensıes apÛs PCA
+% Espa√ßo reduzido para 9 dimens√µes ap√≥s PCA
 
 
-% % CLASSIFICA«√O COM PERCEPTRON
+% % CLASSIFICA√á√ÉO COM PERCEPTRON
 saudaveisPCA = matrizPCA(1:size(xClasse1,1),:);
 doentesPCA = matrizPCA(size(xClasse1,1)+1:end,:);
 Y = [ones(size(saudaveisPCA,1),1);-ones(size(doentesPCA,1),1)];
 [~,~,erroPocketA,indicesYe] = POCKET(saudaveisPCA,doentesPCA,10000,0.1);
 
-% Histograma do resultado da classificaÁ„o Perceptron
+% Histograma do resultado da classifica√ß√£o Perceptron
 classificacaoP = Y';
 classificacaoP(indicesYe) = -classificacaoP(indicesYe);
 H = [sum(classificacaoP+Y'<0) sum(classificacaoP+Y'==0) sum(classificacaoP+Y'>0)];
 bar(H);
 text(1:length(H),H,num2str(H'),'vert','bottom','horiz','center'); 
 box off
-title({['Resultado Perceptron (agrupamento A)'];['Acur·cia: ', num2str(100*(1-erroPocketA),'%.2f'),'%']});
+title({['Resultado Perceptron (agrupamento A)'];['Acur√°cia: ', num2str(100*(1-erroPocketA),'%.2f'),'%']});
 xlabel('1 = VN, 2 = FN+FP, 3 = VP');
 ylabel('padroes');
 
@@ -101,22 +101,22 @@ ylabel('padroes');
 % ylabel('%');
 
 
-% % CLASSIFICA«√O COM SVM LINEAR
+% % CLASSIFICA√á√ÉO COM SVM LINEAR
 [alpha, w0] = semana9_SVM(matrizPCA,Y,'linear');
 indices_svms = find(alpha>0);
 svms = matrizPCA(indices_svms,:);
 coefs = alpha(indices_svms).*Y(indices_svms);
 [classificacao,erroSVMA] = semana9_SVMclass(coefs,svms','linear',0,0,w0,matrizPCA',Y');
 
-% Histograma do resultado da classificaÁ„o SVM
+% Histograma do resultado da classifica√ß√£o SVM
 figure;
 H = [sum(classificacao+Y'<0) sum(classificacao+Y'==0) sum(classificacao+Y'>0)];
 bar(H);
 text(1:length(H),H,num2str(H'),'vert','bottom','horiz','center'); 
 box off
-title({['Resultado SVM (agrupamento A)'];['Acur·cia: ', num2str(100-erroSVMA,'%.2f'),'%']});
+title({['Resultado SVM (agrupamento A)'];['Acur√°cia: ', num2str(100-erroSVMA,'%.2f'),'%']});
 xlabel('1 = VN, 2 = FN+FP, 3 = VP');
-ylabel('padrıes');
+ylabel('padr√µes');
 
 % % Histograma de percentual dos erros SVM
 % FN_SVMA = (sum(Y'==1)-sum(classificacao+Y'==2))/sum(Y'==1);
@@ -126,10 +126,10 @@ ylabel('padrıes');
 % xlabel('1 = FN, 2 = FP');
 % ylabel('%');
 
-% AUC da caracterÌstica 1
+% AUC da caracter√≠stica 1
 % aucA1 = ROC(matrizPCA(:,1),Y);
 
-% % AVALIA«√O DE POSSÕVEIS SUBAJUSTES E SOBREAJUSTES
+% % AVALIA√á√ÉO DE POSS√çVEIS SUBAJUSTES E SOBREAJUSTES
 
 part = cvpartition(size(matrizPCA,1),'KFold',10);
 Q = [matrizPCA ones(size(matrizPCA,1),1)];
@@ -175,9 +175,9 @@ end
 delete(wb);
 
 
-%% CLASSIFICA«√O AGRUPAMENTO B: "SAUD¡VEIS x TODOS (5% DPOC)"
+%% CLASSIFICA√á√ÉO AGRUPAMENTO B: "SAUD√ÅVEIS x TODOS (5% DPOC)"
 
-% % PARTICIONANDO 5% DOS PADR’ES DE DPOC
+% % PARTICIONANDO 5% DOS PADR√ïES DE DPOC
 c = cvpartition(sum(diagnostico==3),'KFold',20);
 idx = test(c,1);
 dpoc = dados(diagnostico==3,:);
@@ -193,14 +193,14 @@ classes = [ones(size(xClasse1,1),1);2*ones(size(xClasse1,1),1)];
 % [n,x] = hist(classes,2);
 % barstrings = num2str(n');
 % text(x,n,barstrings,'horizontalalignment','center','verticalalignment','top');
-% title('DistribuiÁ„o dos padrıes (1 = SAUD¡VEIS, 2 = N√O-SAUD¡VEIS)');
+% title('Distribui√ß√£o dos padr√µes (1 = SAUD√ÅVEIS, 2 = N√ÉO-SAUD√ÅVEIS)');
 % xlabel('classe');
-% ylabel('padrıes');
+% ylabel('padr√µes');
 % ax = gca;
 % ax.XTick = [1 2];
 % clear n x ax
 
-% % NORMALIZA«√O DOS DADOS
+% % NORMALIZA√á√ÉO DOS DADOS
 todas = [xClasse1;xClasse2];
 padroes_norm = zeros(size(todas,1),size(todas,2));
 for i=1:size(xClasse1,2)
@@ -212,8 +212,8 @@ doentes = padroes_norm(size(xClasse1,1)+1:end,:);
 
 % % PERCEPTRON POCKET PARA VERIFICAR SEPARABILIDADE LINEAR
 [~,~,erroPocketB] = POCKET(saudaveis,doentes,10000,0.1);
-% 0.05 de erro, mas >95% dos dados s„o da classe n„o-saud·vel...
-% N„o È separ·vel linearmente, o algoritmo n„o converge.
+% 0.05 de erro, mas >95% dos dados s√£o da classe n√£o-saud√°vel...
+% N√£o √© separ√°vel linearmente, o algoritmo n√£o converge.
 
 % % PCA
 erroPCA = 0;
@@ -225,16 +225,16 @@ end
 [~,~,matrizPCA] = KL(padroes_norm',i+1);
 clear i erroPCA;
 matrizPCA = matrizPCA';
-% EspaÁo reduzido para 9 dimensıes apÛs PCA
+% Espa√ßo reduzido para 9 dimens√µes ap√≥s PCA
 
 
-% % CLASSIFICA«√O COM PERCEPTRON
+% % CLASSIFICA√á√ÉO COM PERCEPTRON
 saudaveisPCA = matrizPCA(1:size(xClasse1,1),:);
 doentesPCA = matrizPCA(size(xClasse1,1)+1:end,:);
 Y = [ones(size(saudaveisPCA,1),1);-ones(size(doentesPCA,1),1)];
 [~,~,erroPocketA,indicesYe] = POCKET(saudaveisPCA,doentesPCA,10000,0.1);
 
-% Histograma do resultado da classificaÁ„o Perceptron
+% Histograma do resultado da classifica√ß√£o Perceptron
 figure;
 classificacaoP = Y';
 classificacaoP(indicesYe) = -classificacaoP(indicesYe);
@@ -242,7 +242,7 @@ H = [sum(classificacaoP+Y'<0) sum(classificacaoP+Y'==0) sum(classificacaoP+Y'>0)
 bar(H);
 text(1:length(H),H,num2str(H'),'vert','bottom','horiz','center'); 
 box off
-title({['Resultado Perceptron (agrupamento B)'];['Acur·cia: ', num2str(100*(1-erroPocketB),'%.2f'),'%']});
+title({['Resultado Perceptron (agrupamento B)'];['Acur√°cia: ', num2str(100*(1-erroPocketB),'%.2f'),'%']});
 xlabel('1 = VN, 2 = FN+FP, 3 = VP');
 ylabel('padroes');
 
@@ -255,22 +255,22 @@ ylabel('padroes');
 % ylabel('%');
 
 
-% % CLASSIFICA«√O COM SVM LINEAR
+% % CLASSIFICA√á√ÉO COM SVM LINEAR
 [alpha, w0] = semana9_SVM(matrizPCA,Y,'linear');
 indices_svms = find(alpha>0);
 svms = matrizPCA(indices_svms,:);
 coefs = alpha(indices_svms).*Y(indices_svms);
 [classificacao,erroSVMB] = semana9_SVMclass(coefs,svms','linear',0,0,w0,matrizPCA',Y');
 
-% Histograma do resultado da classificaÁ„o SVM
+% Histograma do resultado da classifica√ß√£o SVM
 figure;
 H = [sum(classificacao+Y'<0) sum(classificacao+Y'==0) sum(classificacao+Y'>0)];
 bar(H);
 text(1:length(H),H,num2str(H'),'vert','bottom','horiz','center'); 
 box off
-title({['Resultado SVM (agrupamento B)'];['Acur·cia: ', num2str(100-erroSVMB,'%.2f'),'%']});
+title({['Resultado SVM (agrupamento B)'];['Acur√°cia: ', num2str(100-erroSVMB,'%.2f'),'%']});
 xlabel('1 = VN, 2 = FN+FP, 3 = VP');
-ylabel('padrıes');
+ylabel('padr√µes');
 
 % % Histograma de percentual dos erros SVM
 % FN_SVMA = (sum(Y'==1)-sum(classificacao+Y'==2))/sum(Y'==1);
@@ -280,11 +280,11 @@ ylabel('padrıes');
 % xlabel('1 = FN, 2 = FP');
 % ylabel('%');
 
-% AUC da caracterÌstica 1
+% AUC da caracter√≠stica 1
 % aucB1 = ROC(matrizPCA,Y);
 
 
-% % AVALIA«√O DE POSSÕVEIS SUBAJUSTES E SOBREAJUSTES
+% % AVALIA√á√ÉO DE POSS√çVEIS SUBAJUSTES E SOBREAJUSTES
 
 part = cvpartition(size(matrizPCA,1),'KFold',10);
 Q = [matrizPCA ones(size(matrizPCA,1),1)];
