@@ -1,21 +1,19 @@
-% % TRABALHO FINAL DE ENGENHARIA M√âDICA 2S/2020
-% % GRUPO 1
-
-% % CLASSIFICA√á√ÉO DE INDIV√çDUOS SAUD√ÅVEIS/DOENTES DE UM BANCO DE DADOS DE
-% % AUSCULTA√á√ïES TOR√ÅXICAS
-
 % % ---------------------------------------------------------------------
-% % SCRIPT PARA ORGANIZA√á√ÉO E EXTRA√á√ÉO DE CARACTER√çSTICAS
-% % Resulta nos dados presentes no arquivo 'DADOS_GRUPO1.mat'
+% % SCRIPT PARA ORGANIZA«√O E EXTRA«√O DE CARACTERÕSTICAS
+% %     Resulta nos dados presentes no arquivo 'DADOS_GRUPO1.mat'
+% %
+% % OBS.: N„o È necess·rio executar este script. O arquivo 'DADOS_GRUPO1.mat'
+% % j· foi criado e disponibilizado junto com o script de classificaÁ„o para 
+% % reduzir o tempo de processamento.
 % % ---------------------------------------------------------------------
 
-% % CAMINHO PARA A PASTA DE DADOS (PASTA QUE CONT√âM OS ARQUIVOS .TXT E .WAV)
-pathname = 'C:\Users\$USER$\Desktop\EngenhariaMedica\TRABALHOFINAL\Respiratory_Sound_Database\Respiratory_Sound_Database\audio_and_txt_files';
+% % CAMINHO PARA A PASTA DE DADOS (PASTA QUE CONT…M OS ARQUIVOS .TXT E .WAV)
+pathname = 'C:\Users\f8\Desktop\EngenhariaMedica\TRABALHOFINAL\Respiratory_Sound_Database\Respiratory_Sound_Database\audio_and_txt_files';
 
-% % CAMINHO PARA A TABELA DE DIAGN√ìSTICOS (ARQUIVO .CSV)
-T = readtable('C:\Users\$USER$\Desktop\EngenhariaMedica\TRABALHOFINAL\Respiratory_Sound_Database\Respiratory_Sound_Database\patient_diagnosis.csv');
+% % CAMINHO PARA A TABELA DE DIAGN”STICOS (ARQUIVO .CSV)
+T = readtable('C:\Users\f8\Desktop\EngenhariaMedica\TRABALHOFINAL\Respiratory_Sound_Database\Respiratory_Sound_Database\patient_diagnosis.csv');
 
-% % EXTRAINDO IN√çCIO E FINAL DOS CICLOS RESPIRAT√ìRIOS EM CADA GRAVA√á√ÉO
+% % EXTRAINDO INÕCIO E FINAL DOS CICLOS RESPIRAT”RIOS EM CADA GRAVA«√O
 S = dir(fullfile(pathname,'*.txt'));
 outtxt = cell(size(S));
 w = waitbar(0,'Importando arquivos .txt');
@@ -40,7 +38,7 @@ for k = 1:numel(S)
     for i = 1:size(outtxt{k},1)
         if floor(outtxt{k}(i,1)*fs(k))
             ciclos{k,i} = dados((floor(outtxt{k}(i,1)*fs(k))):(ceil(outtxt{k}(i,2)*fs(k))));
-        else %caso o primeiro √≠ndice do ciclo seja 0
+        else %caso o primeiro Ìndice do ciclo seja 0
             ciclos{k,i} = dados(1:(ceil(outtxt{k}(i,2)*fs(k))));
         end
         
@@ -49,7 +47,7 @@ end
 delete(w);
 clear dados filename filepath i k w
 
-w = waitbar(0,'Relacionando diagn√≥sticos');
+w = waitbar(0,'Relacionando diagnÛsticos');
 classes_all = table;
 for j = 1:size(S)
     waitbar(j/numel(S));
@@ -64,7 +62,7 @@ delete(w);
 clear id j m pathname S T w
             
 
-% % EXTRA√á√ÉO DE CARACTER√çSTICAS PRINCIPAIS
+% % EXTRA«√O DE CARACTERÕSTICAS PRINCIPAIS
 media = zeros(size(ciclos));
 variancia = zeros(size(ciclos));
 mobilidade = zeros(size(ciclos));
@@ -80,7 +78,7 @@ inclinacao = zeros(size(ciclos));
 crista = zeros(size(ciclos));
 reducao = zeros(size(ciclos));
 
-w = waitbar(0,'Extraindo caracter√≠sticas');
+w = waitbar(0,'Extraindo caracterÌsticas');
 for i=1:size(ciclos,1)
     waitbar(i/size(ciclos,1));
     for j=1:size(ciclos,2)
@@ -136,7 +134,7 @@ clear classes_all media variancia mobilidade complexidade ...
     freq_central largura_banda freq_margem assimetria crista curtose entropia...
     inclinacao reducao indice i j w
 
-w = waitbar(0,'Organizando numera√ß√£o dos diagn√≥sticos');
+w = waitbar(0,'Organizando numeraÁ„o dos diagnÛsticos');
 numeracao = zeros(numel(aux),1);
 for m=1:numel(aux)
     waitbar(m/numel(aux));
@@ -159,7 +157,7 @@ for m=1:numel(aux)
            numeracao(m) = 8;  %Pneumonia
     end
 end
-num_diagnostico = table([1;2;3;4;5;6;7;8],{'Saud√°vel';'Asma';'DPOC';'ITRS';'ITRI';'Bronquiectasia';'Bronquiolite';'Pneumonia'});
+num_diagnostico = table([1;2;3;4;5;6;7;8],{'Saud·vel';'Asma';'DPOC';'ITRS';'ITRI';'Bronquiectasia';'Bronquiolite';'Pneumonia'});
 num_diagnostico.Properties.VariableNames = {'Numeracao' 'Diagnostico'};
 delete(w);
 clear aux m outtxt w

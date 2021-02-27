@@ -19,8 +19,8 @@ patterns = sortrows(patterns,-1);
 classes = patterns(:,2);
 p = cumsum(classes==1);
 tp = p/sum(classes==1);
-n = cumsum(classes==0);
-fp = n/sum(classes==0);
+n = cumsum(classes==-1);
+fp = n/sum(classes==-1);
 
 n = length(tp);
 Y = (tp(2:n)+tp(1:n-1))/2;
