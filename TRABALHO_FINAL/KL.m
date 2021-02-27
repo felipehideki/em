@@ -1,15 +1,22 @@
 function [autovalores, matrizLL, matrizmN, erro] = KL(matrizLN,m)
-    % INPUTS:   
-    %           matrizLN (caracterÌsticas x padrıes)
-    %           m (n˙mero de autovetores, caracterÌsticas a selecionar)
-    
-    % OUTPUTS:
-    %           autovalores
-    %           matrizLL (autovetores correspondentes aos autovalores)
-    %           matrizmN (projeÁ„o no novo espaÁo com 'm' caracterÌsticas)
-    %           erro (erro quadr·tico mÈdio em percentual da vari‚ncia)
 
-    %% MATRIZ DE COVARI¬NCIA
+%   FUN√á√ÉO:
+%           [autovalores, matrizLL, matrizmN, erro] = KL(matrizLN,m)
+%
+%   A fun√ß√£o implementa o algoritmo para calcular a Transformada de
+%   Karhunen-Lo√®ve para um conjunto de dados.
+% 
+%   INPUTS:   
+%           matrizLN = matriz de dados (caracter√≠sticas x padr√µes)
+%           m = n√∫mero de autovetores, dimens√µes a calcular
+% 
+%   OUTPUTS:
+%           autovalores = autovalores resultantes da transformada
+%           matrizLL = autovetores correspondentes aos autovalores
+%           matrizmN = dados projetados num espa√ßo com 'm' dimens√µes
+%           erro = erro quadr√°tico m√©dio em percentual da vari√¢ncia
+
+    %% MATRIZ DE COVARI√ÇNCIA
     matcov = cov(matrizLN');
     
     %%  AUTOVETORES E AUTOVALORES
