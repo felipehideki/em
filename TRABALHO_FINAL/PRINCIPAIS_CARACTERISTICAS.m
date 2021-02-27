@@ -1,8 +1,32 @@
-% % SEMANA 03
-
 function [media,variancia,mobilidade,complex_estatistica,freq_central,largura_banda,...
     freq_margem,assimetria,curtose,entropia,inclinacao,crista,reducao] = PRINCIPAIS_CARACTERISTICAS(SINAL,FREQ_AMOSTRAGEM)
   
+%   FUNÇÃO:
+%           [media,variancia,mobilidade,complex_estatistica,freq_central,largura_banda,...
+%           freq_margem,assimetria,curtose,entropia,inclinacao,crista,reducao] = PRINCIPAIS_CARACTERISTICAS(SINAL,FREQ_AMOSTRAGEM)
+%
+%   A função implementa o algoritmo para extrair as principais características
+%   de um conjunto de dados.
+% 
+%   INPUT:
+%           SINAL = matriz M x N com dados de sinais (sinais x dados)
+%           FREQ_AMOSTRAGEM = frequência de amostragem do sinal
+% 
+%   OUTPUT:
+%           media = média aritmética
+%           variancia = variância
+%           mobilidade = mobilidade estatística
+%           complex_estatistica = complexidade estatística
+%           freq_central = frequência central (centroide espectral)
+%           largura_banda = índice largura de banda espectral
+%           freq_margem = frequência de margem espectral
+%           assimetria = assimetria espectral (spectral skewness)
+%           curtose = curtose espectral
+%           entropia = entropia espectral
+%           inclinacao = inclinação espectral (spectral slope)
+%           crista = crista espectral (spectral crest)
+%           reducao = redução espectral (spectral decrease)
+    
     qtd_trechos = size(SINAL,1);
     tamanho_sinal = size(SINAL,2);
     fshift = (-tamanho_sinal/2:tamanho_sinal/2-1)*(FREQ_AMOSTRAGEM/tamanho_sinal);
@@ -59,7 +83,7 @@ function [media,variancia,mobilidade,complex_estatistica,freq_central,largura_ba
         denominador = 0;
         uf = -mean(fshift(1:floor(tamanho_sinal/2)));
         us = mean(potencia(trecho,1:floor(tamanho_sinal/2)));
-        
+
         for i=1:floor(tamanho_sinal/2)
             %% FREQUÊNCIA CENTRAL
             freq_central(trecho) = freq_central(trecho) + (fshift(i)*(-1)*potencia(trecho,i)/soma_pot);  %fshift*(-1) pois comeÃ§a da parte negativa do deslocamento
@@ -72,7 +96,7 @@ function [media,variancia,mobilidade,complex_estatistica,freq_central,largura_ba
                 fw = fw + potencia(trecho,floor(tamanho_sinal/2)+1-i)/soma_pot;
                 freq_margem(trecho) = fshift(floor(tamanho_sinal/2)+1-i)*(-1);
             end
-        
+            
             %%  ASSIMETRIA (SKEWNESS)
             assimetria(trecho) = assimetria(trecho) + (((fshift(i)*(-1))-freq_central(trecho))^3)*potencia(trecho,i);
 
