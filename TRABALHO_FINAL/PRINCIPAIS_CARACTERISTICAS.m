@@ -5,8 +5,8 @@ function [media,variancia,mobilidade,complex_estatistica,freq_central,largura_ba
 %           [media,variancia,mobilidade,complex_estatistica,freq_central,largura_banda,...
 %           freq_margem,assimetria,curtose,entropia,inclinacao,crista,reducao] = PRINCIPAIS_CARACTERISTICAS(SINAL,FREQ_AMOSTRAGEM)
 %
-%   A função implementa o algoritmo para extrair as principais características
-%   de um conjunto de dados.
+%   A função implementa o algoritmo para calcular as principais
+%   caracteristicas estatísticas e espectrais de um conjunto de dados.
 % 
 %   INPUT:
 %           SINAL = matriz M x N com dados de sinais (sinais x dados)
