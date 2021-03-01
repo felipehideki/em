@@ -112,7 +112,10 @@ ylabel('padroes');
 figure;
 FN_POCKETA = sum(indicesYe<=size(saudaveisPCA,1))/size(saudaveisPCA,1);
 FP_POCKETA = sum(indicesYe>size(saudaveisPCA,1))/size(doentesPCA,1);
+H = 100*[FN_POCKETA FP_POCKETA];
 bar(100*[FN_POCKETA FP_POCKETA]);
+text(1:length(H),H,num2str(H'),'vert','bottom','horiz','center'); 
+box off
 title('Percentual de erros Perceptron (agrupamento A)');
 xlabel('1 = FN, 2 = FP');
 ylabel('%');
@@ -138,7 +141,10 @@ ylabel('padrões');
 figure;
 FN_SVMA = (sum(Y'==1)-sum(classificacao+Y'==2))/sum(Y'==1);
 FP_SVMA = (sum(Y'==-1)-sum(classificacao+Y'==-2))/sum(Y'==-1);
+H = 100*[FN_SVMA FP_SVMA];
 bar(100*[FN_SVMA FP_SVMA]);
+text(1:length(H),H,num2str(H'),'vert','bottom','horiz','center'); 
+box off
 title('Percentual de erros SVM (agrupamento A)');
 xlabel('1 = FN, 2 = FP');
 ylabel('%');
@@ -290,9 +296,12 @@ ylabel('padroes');
 
 % Histograma de percentual dos erros Perceptron
 figure;
-FN_POCKETA = sum(indicesYe<=size(saudaveisPCA,1))/size(saudaveisPCA,1);
-FP_POCKETA = sum(indicesYe>size(saudaveisPCA,1))/size(doentesPCA,1);
-bar(100*[FN_POCKETA FP_POCKETA]);
+FN_POCKETB = sum(indicesYe<=size(saudaveisPCA,1))/size(saudaveisPCA,1);
+FP_POCKETB = sum(indicesYe>size(saudaveisPCA,1))/size(doentesPCA,1);
+H = 100*[FN_POCKETB FP_POCKETB];
+bar(100*[FN_POCKETB FP_POCKETB]);
+text(1:length(H),H,num2str(H'),'vert','bottom','horiz','center'); 
+box off
 title('Percentual de erros Perceptron (agrupamento B)');
 xlabel('1 = FN, 2 = FP');
 ylabel('%');
@@ -316,9 +325,12 @@ ylabel('padrões');
 
 % Histograma de percentual dos erros SVM
 figure;
-FN_SVMA = (sum(Y'==1)-sum(classificacao+Y'==2))/sum(Y'==1);
-FP_SVMA = (sum(Y'==-1)-sum(classificacao+Y'==-2))/sum(Y'==-1);
-bar(100*[FN_SVMA FP_SVMA]);
+FN_SVMB = (sum(Y'==1)-sum(classificacao+Y'==2))/sum(Y'==1);
+FP_SVMB = (sum(Y'==-1)-sum(classificacao+Y'==-2))/sum(Y'==-1);
+H = 100*[FN_SVMB FP_SVMB];
+bar(100*[FN_SVMB FP_SVMB]);
+text(1:length(H),H,num2str(H'),'vert','bottom','horiz','center'); 
+box off
 title('Percentual de erros SVM (agrupamento B)');
 xlabel('1 = FN, 2 = FP');
 ylabel('%');
